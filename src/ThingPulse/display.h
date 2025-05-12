@@ -1,9 +1,24 @@
-// SPDX-FileCopyrightText: 2023 ThingPulse Ltd., https://thingpulse.com
-// SPDX-License-Identifier: MIT
+/*-------------------------------------------------------------------------------------------------
+**
+** display.h
+**
+**    Display routines provided by the original ThingPulse project.
+**    Includes TFT and touch screen initialization, backlight control,
+**    and display diagnostics for the ESP32 Spotify Remote.
+**
+** SPDX-FileCopyrightText: 2025 ThingPulse Ltd., https://thingpulse.com
+** SPDX-License-Identifier: MIT
+**
+** ------------------------------------------------------------------------------------------------
+** Change Log:
+**    2024-12-26 - Electric Diversions - Copied and renamed to tpDisplay.h from display.h
+**    2025-05-04 - Electric Diversions - Renamed back to display.h and moved to ThingPulse folder
+** ------------------------------------------------------------------------------------------------
+*/
 
 #pragma once
 
-#include <FT6236.h>
+#include "FT6236TouchController/FT6236.h"
 #include <TFT_eSPI.h>
 
 #include "settings.h"
@@ -12,8 +27,14 @@
 // Calling tft.getSetup(user) populates it with the settings
 setup_t user;
 
+// declare function prototype
 uint8_t readRegister8(uint8_t reg);
 
+/*
+** ===================================================================
+** initTft - Initialize the TFT display
+** ===================================================================
+*/
 void initTft(TFT_eSPI *tft) {
   tft->init();
   tft->setRotation(TFT_ROTATION);
@@ -34,7 +55,13 @@ void initTft(TFT_eSPI *tft) {
   tft->fillScreen(TFT_BLACK);
 }
 
+/*
+** ===================================================================
+** initTouchScreen - Initialize the touch screen
+** ===================================================================
+*/
 void initTouchScreen(FT6236 *ts) {
+  log_i("***** Entered... initTouchScreen()");
   if (ts->begin(TOUCH_SENSITIVITY, TOUCH_SDA, TOUCH_SCL)) {
     log_i("Capacitive touch started.");
   } else {
@@ -43,6 +70,11 @@ void initTouchScreen(FT6236 *ts) {
   ts->setRotation(TOUCH_ROTATION);
 }
 
+/*
+** ===================================================================
+** logDisplayDebugInfo - dump what we know about the TFT display
+** ===================================================================
+*/
 void logDisplayDebugInfo(TFT_eSPI *tft) {
   tft->getSetup(user);
 
@@ -77,6 +109,11 @@ void logDisplayDebugInfo(TFT_eSPI *tft) {
   log_i("Sensitivity:       %d (threshold)", readRegister8(FT6236_REG_THRESHHOLD));
 }
 
+/*
+** ===================================================================
+** readRegister8 - 
+** ===================================================================
+*/
 uint8_t readRegister8(uint8_t reg) {
   uint8_t x;
 

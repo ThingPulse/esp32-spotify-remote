@@ -1,12 +1,27 @@
-// SPDX-FileCopyrightText: 2023 ThingPulse Ltd., https://thingpulse.com
-// SPDX-License-Identifier: MIT
+/*-------------------------------------------------------------------------------------------------
+**
+** spotify.h
+**
+**    Utility routines from ThingPulse for Spotify integration. This includes
+**    OAuth authentication, certificate setup, and serving a local web
+**    interface to acquire an auth code via redirect URI.
+**
+** SPDX-FileCopyrightText: 2025 ThingPulse Ltd., https://thingpulse.com
+** SPDX-License-Identifier: MIT
+**
+** ------------------------------------------------------------------------------------------------
+** Change Log:
+**    2024-12-27 - Electric Diversions - Copied and renamed to tpSpotify.h from spotify.h
+**    2025-05-04 - Electric Diversions - Renamed back to spotify.h and moved to ThingPulse folder
+** ------------------------------------------------------------------------------------------------
+*/
 
 #pragma once
 
 #include <ArduinoJson.h>
 #include <ESPmDNS.h>
 #include <SpotifyArduino.h>
-#include <SpotifyArduinoCert.h>
+// #include <SpotifyArduinoCert.h>
 #include <WebServer.h>
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -14,8 +29,39 @@
 
 #include "settings.h"
 
+extern const char *spotify_server_cert;
+extern const char *spotify_image_server_cert;
+
+/*
+** ===================================================================
+** Spotify Settings
+** ===================================================================
+*/
+const char *SPOTIFY_CLIENT_ID     = "SPOTIFY_CLIENT_ID goes here";
+const char *SPOTIFY_CLIENT_SECRET = "SPOTIFY_CLIENT_SECRET goes here";
+// Use http://<value-configured-here>.local/callback/ as the redirect URI for the app on Spotify.
+// Hence, the default URI is http://tp-spotify.local/callback/.
+// If you change the value here, you need to modify the redirect URI on Spotify as well.
+#define SPOTIFY_ESPOTIFIER_NODE_NAME "tp-spotify"
+
+// the spotify-api-arduino library sets this to 1 (i.e. enabled) by default
+#define SPOTIFY_DEBUG 0
+//#define SPOTIFY_DEBUG 1
+
+// 1/2/2025:
+#define SPOTIFY_SERIAL_OUTPUT 0
+// 1/2/2025:
+#define SPOTIFY_PRINT_JSON_PARSE 0
+
+#define SPOTIFY_REFRESH_TOKEN_FILE_NAME "/refresh-token.txt"
+// the '/callback/' path is essential as spotify.h#fetchSpotifyAuthCode() registers a handler for it
+#define SPOTIFY_REDIRECT_URI "http%3A%2F%2F" SPOTIFY_ESPOTIFIER_NODE_NAME ".local%2Fcallback%2F"
+
+
 String authCode = "";
-String scope = "user-read-playback-state%20user-modify-playback-state";
+//String scope = "user-read-playback-state%20user-modify-playback-state";
+String scope = "user-read-playback-state%20user-modify-playback-state%20user-library-read";
+//user-read-playback-state and user-library-read scopes 
 WebServer server(80);
 WiFiClientSecure client;
 SpotifyArduino spotify(client, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET);
@@ -37,11 +83,14 @@ const char *webpageTemplate =
 </html>
 )";
 
-void initSpotifiy() {
+
+void initSpotify() {
+  log_i("*** Entering initSpotify() !!!!");
   client.setCACert(spotify_server_cert);
 }
 
 void handleCallback() {
+  log_i("###### handleCallback().");
   String code = "";
   for (uint8_t i = 0; i < server.args(); i++) {
     if (server.argName(i) == "code") {
@@ -57,10 +106,12 @@ void handleCallback() {
 }
 
 void handleFavicon() {
+  log_i("*** Entering handleFavicon()");
   server.send(200, "image/vnd.microsoft.icon", "00000100");
 }
 
 void handleNotFound() {
+  log_i("*** Entering handleNotFound()");
   String message = "File Not Found\n\n";
   message += "URI: ";
   message += server.uri();
@@ -78,17 +129,27 @@ void handleNotFound() {
   server.send(404, "text/plain", message);
 }
 
+void printRootWebpage() {
+  char webpage[800];
+  sprintf(webpage, webpageTemplate, SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, scope.c_str());
+  log_i("webpage: '%s",webpage);
+}
+
 void handleRoot() {
+  log_i("*** Entering handleRoot()");
   char webpage[800];
   sprintf(webpage, webpageTemplate, SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, scope.c_str());
   server.send(200, "text/html", webpage);
 }
 
 String fetchSpotifyAuthCode() {
+  log_i("*** Entering fetchSpotifyAuthCode()");
   if (MDNS.begin(SPOTIFY_ESPOTIFIER_NODE_NAME)) {
     log_i("MDNS responder started for node name '%s'.", SPOTIFY_ESPOTIFIER_NODE_NAME);
     log_i("Open browser at http://%s.local", SPOTIFY_ESPOTIFIER_NODE_NAME);
   }
+
+  //printRootWebpage();
 
   server.on("/", handleRoot);
   server.on("/callback/", handleCallback);
@@ -98,6 +159,7 @@ String fetchSpotifyAuthCode() {
   log_i("HTTP server started");
 
   while (authCode == "") {
+    //log_i("--- calling server.handleClient().");
     server.handleClient();
     yield();
   }
