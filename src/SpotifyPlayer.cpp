@@ -82,8 +82,6 @@ int SpotifyPlayer::getAlbumReleaseYear()
 
 // Spotify related
 #define SP_SPOTIFY_MARKET         "IE"
-#define SP_COVER_JPG_FILENAME     "/cover.jpg"
-// #define SP_NO_COVER_JPG_FILENAME  "/NoArtAvailablejpeg.jpg"
 
 /*
 ** ===================================================================

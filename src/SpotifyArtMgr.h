@@ -23,7 +23,7 @@
 #include <Arduino.h>
 #include <HTTPClient.h>
 
-#define SP_NO_COVER_JPG_FILENAME "/NoArtAvailablejpeg.jpg"
+#define SP_NO_COVER_JPG_FILENAME "/DefaultCoverArt.jpg"
 
 /*
 ** ===================================================================
