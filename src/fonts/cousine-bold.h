@@ -5,7 +5,7 @@
 **    Contains the binary font data for the Cousine Bold typeface used in the Spotify display UI.
 **    This header defines the glyph data for rendering fixed-width bold text on screen.
 **
-** SPDX-FileCopyrightText: 2025 Electric Diversions
+** SPDX-FileCopyrightText: 2025 ThingPulse Ltd., https://thingpulse.com  
 ** SPDX-License-Identifier: MIT
 **
 ** ------------------------------------------------------------------------------------------------
