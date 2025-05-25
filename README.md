@@ -39,6 +39,7 @@ In order to run this project on your device, you will need to setup an applicati
 
 - **Album Art Display**
   - Downloads and displays album artwork via Spotify Web API
+  - Syncs background color with album art
   - Caches artwork locally for performance
 
 - **Multiple UI Modes**
@@ -53,7 +54,7 @@ In order to run this project on your device, you will need to setup an applicati
 - **Designed for ESP32 + TFT Touch**
   - Built using PlatformIO and Arduino
   - Touch event handling for UI buttons and screen navigation
-  - Takes advantage of ESP32 dual-core architecture: UI logic runs on one core, while background tasks (e.g., album art refresh) run on the other
+  - Takes advantage of ESP32 dual-core architecture: UI logic runs on one core and background song and album art refreshing runs on the other
 
 - **Extensible Design**
   - Modular architecture allows easy addition of new Views (UI screens)
@@ -72,6 +73,7 @@ In order to run this project on your device, you will need to setup an applicati
 - Tap the **album art** on the Home view to switch to the **Cover Art view**.
 - Tap the **clock** to switch to the **Clock view**.
 - Tap the **network status box** in the lower-right corner to open the **Diagnostics view**.
+- Tap the top-left corner for **Prev**, the top-center for **Pause/Play**, and the top-right for **Next** when using views other than Home. 
 
 > For detailed display logic and diagnostics layout, see `DiagnosticsView.cpp`.
 
