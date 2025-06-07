@@ -63,7 +63,7 @@ SCFileIO::~SCFileIO()
 **
 ** ===================================================================
 */
-void SCFileIO::initialize()
+bool SCFileIO::initialize()
 {
     if (!xSemaphoreFileIO)
     {
@@ -71,14 +71,14 @@ void SCFileIO::initialize()
         if (!xSemaphoreFileIO)
         {
             spLogE(LOGTAG_FILEIO, "Failed to create semaphore!");
-            return;
+            return false;
         }
     }
 
     if (!takeSemaphore())
     {
         spLogE(LOGTAG_FILEIO, "Failed to acquire semaphore for initialize().");
-        return;
+        return false;
     }
 
     if (LittleFS.begin())
@@ -86,11 +86,13 @@ void SCFileIO::initialize()
         spLogI(LOGTAG_FILEIO, "Flash FS available!");
         giveSemaphore();
         listFiles();
+        return true;
     }
     else
     {
         giveSemaphore();
         spLogE(LOGTAG_FILEIO, "Flash FS initialization failed!");
+        return false;
     }
 
   

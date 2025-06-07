@@ -29,6 +29,7 @@
 #define LOGTAG_FILEIO          "FileIO"      // File IO Library
 #define LOGTAG_CACHE           "Cache"       // Album Cache Logging
 #define LOGTAG_DISPLAY_MODE    "DispMode"    // Display Modes
+#define LOGTAG_VAULT           "Vault"       // Credential Vaulting
 
 /*
 ** ===================================================================

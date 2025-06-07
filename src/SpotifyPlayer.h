@@ -21,6 +21,8 @@
 #include "PlayingMetadata.h"
 #include "scui.h"
 
+// Forward declaration to avoid including full spotify.h in the header
+class SpotifyArduino;
 class SpotifyPlayer {
 public:
     // Public method to access the singleton instance
@@ -28,7 +30,8 @@ public:
 
     // initialization related
     void   initialize(QueueHandle_t    *pScuiQueue);
-    bool   verifyRefreshToken();
+    bool   isRefreshTokenAvailable();
+    bool   requestRefreshToken();
     String getNodeName();
     void   login();
     void   startBackgroundRefreshes();
@@ -63,6 +66,9 @@ private:
     SemaphoreHandle_t   _xSemaphoreNetwork     = xSemaphoreCreateMutex();
     SemaphoreHandle_t   _xSemaphoreDataCopy    = xSemaphoreCreateMutex();
     TaskHandle_t        _refreshTaskHandle;
+    SpotifyArduino      *_pSpotify             = nullptr;
+    String              _spotifyClientId;
+    String              _spotifyClientSecret;
 
     // Methods
 
@@ -82,6 +88,5 @@ private:
     void   postScuiMessage(SCUIMessageType type, const String& str, int num);
 
     void   saveCache();
-    int    getAlbumReleaseYear();
 
 };

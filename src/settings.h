@@ -21,7 +21,25 @@
 
 // ****************************************************************************
 // User settings
+//
+// Note: You can also use an optional 'user.ini' file.  This will externalize 
+//       settings outside of the code, is already added to .gitignore,
+//       and provides advanced privacy and encryption options.  See Vault
+//       class for details.
 // ****************************************************************************
+
+// WiFi Credentials
+static const char *SSID                  = "SSID Goes Here";
+static const char *WIFI_PWD              = "WiFi Password Goes Here";
+
+// Spotify Credentials
+static const char *SPOTIFY_CLIENT_ID     = "SPOTIFY_CLIENT_ID goes here";
+static const char *SPOTIFY_CLIENT_SECRET = "SPOTIFY_CLIENT_SECRET goes here";
+
+// Timezone
+// Europe/Zurich as per
+// https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
+#define TIMEZONE "CET-1CEST,M3.5.0,M10.5.0/3"
 
 /*
 ** ===================================================================
@@ -32,15 +50,6 @@ constexpr const char* APP_NAME     = "ESP32 Spotify Remote";
 constexpr const char* VERSION      = "2.0.0";
 constexpr const char* COMPILE_TIME = SC_COMPILE_TIME;
 
-/*
-** ===================================================================
-** Time Zone to use
-** ===================================================================
-**
-** timezone Europe/Zurich as per 
-** https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
-*/
-#define TIMEZONE "CST6CDT,M3.2.0,M11.1.0"
 
 /*
 ** ===================================================================

@@ -20,27 +20,24 @@
 #include <WiFi.h>
 
 #include "connectivity.h"
-#include "../settings.h"
-#include "ThingPulse/util.h"  
+#include "ThingPulse/util.h"
+#include "../Vault.h"  
 
 /*
 ** ===================================================================
-** WiFi settings
+** startWiFi()
+**    Attempt to connect to the configured WiFi network
 ** ===================================================================
 */
-const char *SSIDEnc      = "SSID Goes Here";
-const char *WIFI_PWD_Enc = "WiFi Password Goes Here";
-
-
-// Updated to use encrypted network credentials
 void startWiFi() {
-  static const char k[] = "42";
-  char decryptedSSID[50]; 
-  char decryptedWIFI_PWD[50];
-  simpleDecrypt(SSIDEnc, k, decryptedSSID);
-  simpleDecrypt(WIFI_PWD_Enc, k , decryptedWIFI_PWD);
-  WiFi.begin(decryptedSSID, decryptedWIFI_PWD);
-  log_i("Connecting to WiFi '%s'...", decryptedSSID);
+
+ String ssid = Vault::getInstance().getSSID();
+
+//  log_i("WiFi ssid/pw '%s' '%s'", ssid.c_str(), Vault::getInstance().getWiFiPassword().c_str());
+
+  WiFi.begin(ssid, Vault::getInstance().getWiFiPassword());
+
+  log_i("Connecting to WiFi '%s'...", ssid);
   while (WiFi.status() != WL_CONNECTED) {
     //log_i(".");
     Serial.print(".");

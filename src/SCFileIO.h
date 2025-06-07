@@ -32,7 +32,7 @@ public:
     static SCFileIO& getInstance();
 
     // Initializes the semaphore. Must be called before using the class.
-    void initialize();
+    bool initialize();
 
     // Opens a file safely using LittleFS
     File open(const char *path, const char *mode);

@@ -13,6 +13,7 @@
 ** Change Log:
 **    2024-12-27 - Electric Diversions - Copied and renamed to tpSpotify.h from spotify.h
 **    2025-05-04 - Electric Diversions - Renamed back to spotify.h and moved to ThingPulse folder
+**    2025-06-07 - Electric Diversions - Refactor to scope SpotifyArduino instance to SpotifyPlayer
 ** ------------------------------------------------------------------------------------------------
 */
 
@@ -26,19 +27,11 @@
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WiFiClientSecure.h>
-
-#include "settings.h"
+#include "Vault.h"
 
 extern const char *spotify_server_cert;
 extern const char *spotify_image_server_cert;
 
-/*
-** ===================================================================
-** Spotify Settings
-** ===================================================================
-*/
-const char *SPOTIFY_CLIENT_ID     = "SPOTIFY_CLIENT_ID goes here";
-const char *SPOTIFY_CLIENT_SECRET = "SPOTIFY_CLIENT_SECRET goes here";
 // Use http://<value-configured-here>.local/callback/ as the redirect URI for the app on Spotify.
 // Hence, the default URI is http://tp-spotify.local/callback/.
 // If you change the value here, you need to modify the redirect URI on Spotify as well.
@@ -64,7 +57,6 @@ String scope = "user-read-playback-state%20user-modify-playback-state%20user-lib
 //user-read-playback-state and user-library-read scopes 
 WebServer server(80);
 WiFiClientSecure client;
-SpotifyArduino spotify(client, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET);
 
 const char *webpageTemplate =
     R"(
@@ -82,12 +74,6 @@ const char *webpageTemplate =
   </body>
 </html>
 )";
-
-
-void initSpotify() {
-  log_i("*** Entering initSpotify() !!!!");
-  client.setCACert(spotify_server_cert);
-}
 
 void handleCallback() {
   log_i("###### handleCallback().");
@@ -131,14 +117,14 @@ void handleNotFound() {
 
 void printRootWebpage() {
   char webpage[800];
-  sprintf(webpage, webpageTemplate, SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, scope.c_str());
+  sprintf(webpage, webpageTemplate, Vault::getInstance().getSpotifyClientID().c_str(), SPOTIFY_REDIRECT_URI, scope.c_str());
   log_i("webpage: '%s",webpage);
 }
 
 void handleRoot() {
   log_i("*** Entering handleRoot()");
   char webpage[800];
-  sprintf(webpage, webpageTemplate, SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, scope.c_str());
+  sprintf(webpage, webpageTemplate, Vault::getInstance().getSpotifyClientID().c_str(), SPOTIFY_REDIRECT_URI, scope.c_str());
   server.send(200, "text/html", webpage);
 }
 

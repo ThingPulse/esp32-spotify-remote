@@ -76,6 +76,7 @@
 #include "esp_task_wdt.h"
 
 #include "settings.h"                   // Global settings to configure app
+#include "Vault.h"                      // Credential management
 #include "DisplayUI.h"                  // Base class for the UI
 #include "ThingPulse/connectivity.h"    // Connectivity support
 #include "SpotifyPlayer.h"              // Spotify Player for all the controls
@@ -100,9 +101,8 @@
 ** Used Fonts
 ** ===================================================================
 */
-#include "Fonts/open-sans.h"
-// #include "fonts/audiowide.h"
-#include "Fonts/cousine-bold.h"
+#include "fonts/open-sans.h"
+#include "fonts/cousine-bold.h"
 
 /*
 ** ===================================================================
@@ -144,6 +144,7 @@ FT6236            ts            = FT6236(TFT_HEIGHT, TFT_WIDTH);  // Touch Contr
 TFT_eSPI          tft           = TFT_eSPI();                     // LCD display
 DisplayUI         ui            = DisplayUI(&tft, &ofr, &clockFont);          // Routines to update UI
 SpotifyPlayer&    spotifyPlayer = SpotifyPlayer::getInstance();   // Spotify Player
+Vault&            vault         = Vault::getInstance();           // Credential management
 
 
 // Task Scheduler to use for time sync.  clockTask runs every hour to update
@@ -181,8 +182,23 @@ void setup()
     initTouchScreen(&ts);
     initTft(&tft);
     logDisplayDebugInfo(&tft);
-    SCFileIO::getInstance().initialize();
     initOpenFontRender();
+
+    if (!SCFileIO::getInstance().initialize())
+    {
+        // initialization failed
+        ui.setBackground(TFTColor::Yellow, true); 
+        ui.cDrawString("FATAL ERROR - Filesystem Not Initialized", 240, 115, 24, TFTColor::Black, ui.getBackground(), "");
+        ui.cDrawString("Please verify that the filesystem image", 240, 145, 24, TFTColor::Black, ui.getBackground(), "");
+        ui.cDrawString("was uploaded.", 240, 175, 24, TFTColor::Black, ui.getBackground(), "");
+        while (true)
+        {
+            delay(1000); // Sit here indefinitely
+        }              
+    }
+
+    vault.initialize();
+
     spotifyPlayer.initialize(&scuiQueue);
     initScheduler();
 
@@ -205,26 +221,37 @@ void setup()
 
     // Prep to log into Spotify
     ui.drawProgress("Checking Spotify status...", 60);
-    if (spotifyPlayer.verifyRefreshToken())
+    if (spotifyPlayer.isRefreshTokenAvailable())
     {
         // token found
     }
     else
     {
+        // clear logo
+        tft.fillRect(60, 20, tft.width() - 120, 130, TFT_BLACK);  
         // token not found
         ui.drawProgress("Getting Spotify token...", 70);
         // clear text beneath the progress bar
-        tft.fillRect(0, 290, tft.width(), 80, TFT_BLACK);        
+        // tft.fillRect(0, 290, tft.width(), 80, TFT_BLACK);        
         String msg;
-        msg += "Open browser at\nhttp://";
+        msg += "From another device\n";
+        msg += "on the same network,\n";
+        msg += "open a browser at\nhttp://";
         msg += spotifyPlayer.getNodeName();
         msg += ".local";  
-        ofr.cdrawString(msg.c_str(), ui.getCenterWidth(), 100);
+        // ofr.cdrawString(msg.c_str(), ui.getCenterWidth(), 70);
+        ui.cDrawString(msg.c_str(), ui.getCenterWidth(), 20, 24, TFTColor::Yellow, ui.getBackground(), "");
+        spotifyPlayer.requestRefreshToken();
+        // clear instructions
+        tft.fillRect(0, 20, tft.width(), 300, TFT_BLACK); 
+        ui.drawLogo();
     }
 
     // Log into Spotify
     ui.drawProgress("Logging into Spotify...", 90);
     spotifyPlayer.login();
+
+    vault.eraseEncryptedCredentials();
 
     // Update to show complete
     ui.drawProgress("Startup completed!", 100);
@@ -269,7 +296,7 @@ void syncTime() {
   if (initTime()) 
   {
     lastTimeSyncMillis = millis();
-    setTimezone(TIMEZONE);
+    setTimezone(Vault::getInstance().getTimezone().c_str());
     spLogI(LOGTAG_GENERAL, "Current local time: %s", getCurrentTimestamp(SYSTEM_TIMESTAMP_FORMAT).c_str());
   }
 }
@@ -289,43 +316,24 @@ void setupLogging()
     SCLogger& logger = SCLogger::getInstance();
 
     // Set default logging level globally (optional)
-    logger.setLogLevel("*", ESP_LOG_VERBOSE); //logger.setLogLevel("*", ESP_LOG_WARN); // Suppresses all logs by default
+    logger.setLogLevel("*", ESP_LOG_WARN); // Suppresses all Informational messages
 
-            // logger.setLogLevel("*", ESP_LOG_WARN); // Suppresses all logs by default
+    // Configure specific logging levels for each tag
+    logger.setLogLevel(LOGTAG_INPUT, ESP_LOG_VERBOSE);
+    // logger.setLogLevel(LOGTAG_SONG_DATA, ESP_LOG_ERROR);
+    logger.setLogLevel(LOGTAG_PLAYER, ESP_LOG_INFO);
+    // logger.setLogLevel(LOGTAG_GUI, ESP_LOG_INFO);
+    logger.setLogLevel(LOGTAG_GENERAL, ESP_LOG_INFO);
+    // logger.setLogLevel(LOGTAG_MULTITASK, ESP_LOG_VERBOSE);
+    logger.setLogLevel(LOGTAG_METRICS, ESP_LOG_INFO);
+    logger.setLogLevel(LOGTAG_HEAP, ESP_LOG_INFO);
+    //logger.setLogLevel(LOGTAG_TRACE, ESP_LOG_INFO);
+    logger.setLogLevel(LOGTAG_FILEIO, ESP_LOG_INFO);
+    // logger.setLogLevel(LOGTAG_CACHE, ESP_LOG_DEBUG);
+    logger.setLogLevel(LOGTAG_VAULT, ESP_LOG_VERBOSE);    
 
-            // // Configure specific logging levels for each tag
-            // logger.setLogLevel(LOGTAG_INPUT, ESP_LOG_VERBOSE);
-            // logger.setLogLevel(LOGTAG_SONG_DATA, ESP_LOG_VERBOSE);
-            // logger.setLogLevel(LOGTAG_PLAYER, ESP_LOG_VERBOSE);
-            // logger.setLogLevel(LOGTAG_GUI, ESP_LOG_VERBOSE);
-            // logger.setLogLevel(LOGTAG_GENERAL, ESP_LOG_VERBOSE);
-            // logger.setLogLevel(LOGTAG_MULTITASK, ESP_LOG_VERBOSE);
-            // logger.setLogLevel(LOGTAG_METRICS, ESP_LOG_VERBOSE);
-            // logger.setLogLevel(LOGTAG_HEAP, ESP_LOG_VERBOSE);
-            // logger.setLogLevel(LOGTAG_TRACE, ESP_LOG_VERBOSE);
-            // logger.setLogLevel(LOGTAG_FILEIO, ESP_LOG_VERBOSE);
-            // logger.setLogLevel(LOGTAG_CACHE, ESP_LOG_WARN);
-
-
-
-            logger.setLogLevel("*", ESP_LOG_WARN); // Suppresses all logs by default
-
-            // Configure specific logging levels for each tag
-            logger.setLogLevel(LOGTAG_INPUT, ESP_LOG_VERBOSE);
-            // logger.setLogLevel(LOGTAG_SONG_DATA, ESP_LOG_ERROR);
-            logger.setLogLevel(LOGTAG_PLAYER, ESP_LOG_INFO);
-            // logger.setLogLevel(LOGTAG_GUI, ESP_LOG_INFO);
-            logger.setLogLevel(LOGTAG_GENERAL, ESP_LOG_INFO);
-            // logger.setLogLevel(LOGTAG_MULTITASK, ESP_LOG_VERBOSE);
-            logger.setLogLevel(LOGTAG_METRICS, ESP_LOG_INFO);
-            logger.setLogLevel(LOGTAG_HEAP, ESP_LOG_INFO);
-            //logger.setLogLevel(LOGTAG_TRACE, ESP_LOG_INFO);
-            // logger.setLogLevel(LOGTAG_FILEIO, ESP_LOG_INFO);
-            // logger.setLogLevel(LOGTAG_CACHE, ESP_LOG_DEBUG);
-            
-
-            // Supress logs for ESP32 components
-            logger.setLogLevel("ssl_client", ESP_LOG_NONE);
+    // Supress logs for ESP32 components
+    logger.setLogLevel("ssl_client", ESP_LOG_NONE);
 
     // Print log levels to serial for verification
     Serial.printf("Log level for General: %d\n", logger.getLogLevel(LOGTAG_GENERAL));
@@ -339,6 +347,7 @@ void setupLogging()
     Serial.printf("Log level for Trace: %d\n", logger.getLogLevel(LOGTAG_TRACE));
     Serial.printf("Log level for File IO: %d\n", logger.getLogLevel(LOGTAG_FILEIO));
     Serial.printf("Log level for Cache: %d\n", logger.getLogLevel(LOGTAG_CACHE));
+    Serial.printf("Log level for Vault: %d\n", logger.getLogLevel(LOGTAG_VAULT));
 
     // Example of logging initialization completion
     spLogI(LOGTAG_GENERAL, "Logging levels initialized.");

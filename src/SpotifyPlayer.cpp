@@ -29,57 +29,6 @@
 
 #include <TJpg_Decoder.h> // Ensure you include the required decoder library
 
-// HTTP client setup remains as is in your project
-
-int SpotifyPlayer::getAlbumReleaseYear() 
-{
-    // // if (!_pCurrentTrack->albumUri || strlen(_pCurrentTrack->albumUri) == 0) 
-    // if (_currentlyPlayingMetadata.albumUri == nullptr)
-    // {
-    //     spLogE(LOGTAG_PLAYER, "Album URI is empty.");
-    //     return -1; // Indicate error
-    // }
-
-    // // Extract album ID from albumUri (typically of the form spotify:album:<id>)
-    // String albumId = String(_currentlyPlayingMetadata.albumUri).substring(14); // Skip "spotify:album:"
-
-    // String url = "https://api.spotify.com/v1/albums/" + albumId + "?market=US";
-
-    // HTTPClient http;
-    // WiFiClientSecure wifiClient;
-    // //wifiClient.setInsecure();  // TODO: Remove... just debugging...
-    // wifiClient.setCACert(spotify_server_cert); // Ensure proper certificate
-
-    // http.begin(wifiClient, url);
-    // http.addHeader("Authorization", "Bearer " + _spotifyRefreshToken); // Use your Spotify token
-
-    // int httpCode = http.GET();
-    // if (httpCode != 200) 
-    // {
-    //     spLogE(LOGTAG_PLAYER, "Failed to get album details, HTTP code: %d", httpCode);
-    //     http.end();
-    //     return -1;
-    // }
-
-    // // Parse JSON response
-    // String payload = http.getString();
-    // http.end();
-
-    // DynamicJsonDocument doc(1024);
-    // deserializeJson(doc, payload);
-
-    // // Get release_date (e.g., "2020-05-01")
-    // const char* releaseDate = doc["release_date"];
-    // if (releaseDate && strlen(releaseDate) >= 4) 
-    // {
-    //     String year = String(releaseDate).substring(0, 4);
-    //     return year.toInt();
-    // }
-
-    // // spLogE(LOGTAG_PLAYER, "Release date not found in album details.");
-    return -1; // Indicate error
-}
-
 // Spotify related
 #define SP_SPOTIFY_MARKET         "IE"
 
@@ -127,9 +76,21 @@ SpotifyPlayer& SpotifyPlayer::getInstance()
 
 void SpotifyPlayer::initialize(QueueHandle_t    *pScuiQueue)
 {
-    // _pUI        = pUI;
     _pScuiQueue = pScuiQueue;
-    initSpotify();
+
+    // keep reference since SpotifyArduino is dependent on values
+    // remaining in memory
+    _spotifyClientId     = Vault::getInstance().getSpotifyClientID();
+    _spotifyClientSecret = Vault::getInstance().getSpotifyClientSecret();
+
+   _pSpotify = new SpotifyArduino(
+        client,
+        _spotifyClientId.c_str(),
+        _spotifyClientSecret.c_str()
+    );    
+    // client is defined in ThingPulse/spotify.h
+    client.setCACert(spotify_server_cert);  
+    
 }
 
 /*
@@ -170,30 +131,48 @@ void SpotifyPlayer::startBackgroundRefreshes()
 
 /*
 ** ===================================================================
-** verifyRefreshToken()
+** isRefreshTokenAvailable()
 **
-** Returns true if previously saved token found; false otherwise.
+** Returns whether the refresh token is available.  This will also
+** internally initialize the token if it exists.
 ** ===================================================================
 */
-bool SpotifyPlayer::verifyRefreshToken()
+bool SpotifyPlayer::isRefreshTokenAvailable()
 {
-    _spotifyRefreshToken = SCFileIO::getInstance().readFsString(SPOTIFY_REFRESH_TOKEN_FILE_NAME);
-    if (_spotifyRefreshToken == "") 
-    {
-        spLogI(LOGTAG_PLAYER, "No Spotify refresh token found. Requesting one through the browser via auth code.");
-
-        String spotifyAuthCode = fetchSpotifyAuthCode();
-        _spotifyRefreshToken = spotify.requestAccessTokens(spotifyAuthCode.c_str(), SPOTIFY_REDIRECT_URI);
-        SCFileIO::getInstance().saveFsString(SPOTIFY_REFRESH_TOKEN_FILE_NAME, _spotifyRefreshToken);
-
+   _spotifyRefreshToken = SCFileIO::getInstance().readFsString(SPOTIFY_REFRESH_TOKEN_FILE_NAME);
+   
+   if (_spotifyRefreshToken == "")
+   {
+        spLogI(LOGTAG_PLAYER, "Spotify refresh token not found.");
         return false;
-
-    } 
-    else 
-    {
-        spLogI(LOGTAG_PLAYER, "Using previously saved Spotify refresh token.");
+   }
+   else
+   {
+        spLogI(LOGTAG_PLAYER, "Spotify refresh token found.");
         return true;
-    }
+   }
+}
+
+/*
+** ===================================================================
+** requestRefreshToken()
+**
+** Requests a fresh refresh token.  A refresh token is a security 
+** credential that allows client applications to obtain new access
+** tokens without requiring users to reauthorize the application.
+** ===================================================================
+*/
+bool SpotifyPlayer::requestRefreshToken()
+{
+
+    spLogI(LOGTAG_PLAYER, "Requesting Spotify refresh token through the browser via auth code.");
+
+    String spotifyAuthCode = fetchSpotifyAuthCode();
+    _spotifyRefreshToken = _pSpotify->requestAccessTokens(spotifyAuthCode.c_str(), SPOTIFY_REDIRECT_URI);
+    SCFileIO::getInstance().saveFsString(SPOTIFY_REFRESH_TOKEN_FILE_NAME, _spotifyRefreshToken);
+
+    return true;
+
 }
 
 /*
@@ -217,8 +196,8 @@ void SpotifyPlayer::login()
     // - keeps track of the refresh token and its TTL internally
     // - automatically renews the actual access token using the refresh token
     // -> see SpotifyArduino.h#autoTokenRefresh and SpotifyArduino::checkAndRefreshAccessToken() (called before every API function)
-    spotify.setRefreshToken(_spotifyRefreshToken.c_str());
-    spotify.refreshAccessToken();
+    _pSpotify->setRefreshToken(_spotifyRefreshToken.c_str());
+    _pSpotify->refreshAccessToken();
     spLogI(LOGTAG_PLAYER, "Authentication against Spotify done. Refresh token: %s", _spotifyRefreshToken.c_str());    
 }
 
@@ -273,7 +252,7 @@ void SpotifyPlayer::nextSong()
                     static_cast<int>(TFTColor::SC_NetworkInProgress));
     if (xSemaphoreTake(_xSemaphoreNetwork, portMAX_DELAY)) 
     {
-        if (spotify.nextTrack())
+        if (_pSpotify->nextTrack())
         {
             //_pUI->drawStatusBox(TFTColor::SC_NetworkSuccess); 
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
@@ -316,7 +295,7 @@ void SpotifyPlayer::previousSong()
 
     if (xSemaphoreTake(_xSemaphoreNetwork, portMAX_DELAY)) 
     {
-        if (spotify.previousTrack())
+        if (_pSpotify->previousTrack())
         {
             // _pUI->drawStatusBox(TFTColor::SC_NetworkSuccess); 
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
@@ -362,7 +341,7 @@ void SpotifyPlayer::pauseSong()
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "Making Call",
                             static_cast<int>(TFTColor::SC_NetworkInProgress));    
-            if (spotify.pause())
+            if (_pSpotify->pause())
             {
                 // _pUI->drawStatusBox(TFTColor::SC_NetworkSuccess); 
                 postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
@@ -385,7 +364,7 @@ void SpotifyPlayer::pauseSong()
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "Making Call",
                             static_cast<int>(TFTColor::SC_NetworkInProgress));    
-            if (spotify.play())
+            if (_pSpotify->play())
             {
                 // _pUI->drawStatusBox(TFTColor::SC_NetworkSuccess); 
                 postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
@@ -435,7 +414,7 @@ void SpotifyPlayer::refreshCurrentTrack()
             spLogI(LOGTAG_MULTITASK, "Invoking spotify.getCurrentlyPlaying(...)");
             // vTaskDelay(pdMS_TO_TICKS(200));
             Monitor::start(MONITOR_ID_SPOTIFY_GET_CURRENTLY_PLAYING, LOGTAG_METRICS, "spotify.getCurrentlyPlaying(...)");
-            status = spotify.getCurrentlyPlaying(SpotifyPlayer::getCurrentlyPlayingCallback, SP_SPOTIFY_MARKET);
+            status = _pSpotify->getCurrentlyPlaying(SpotifyPlayer::getCurrentlyPlayingCallback, SP_SPOTIFY_MARKET);
             Monitor::stop(MONITOR_ID_SPOTIFY_GET_CURRENTLY_PLAYING);
             xSemaphoreGive(_xSemaphoreNetwork);
         }
