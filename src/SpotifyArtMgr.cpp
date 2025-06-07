@@ -141,6 +141,8 @@ SpotifyArtMgr* SpotifyArtMgr::getInstance()
     if (gInstance == nullptr)
     {
         gInstance = new SpotifyArtMgr();
+        // figure out if configured with more than 4MB of file space
+        gInstance->determineCacheSize();
         // populate the index to last run
         String filePath = String(gCacheFileroot) + ".txt";
         SCFileIO::getInstance().hexDump(LOGTAG_CACHE, filePath.c_str());
@@ -657,6 +659,43 @@ void SpotifyArtMgr::saveCacheIndex()
 
 /*
 ** ===================================================================
+** determineCacheSize()
+**    Determines the maximum number of album art files to cache based
+**    on the size of the LittleFS partition. If the partition is at
+**    least 3,000,000 bytes, this is assumed to be a custom partition
+**    layout and the cache size is increased to 60. Otherwise, the
+**    default cache size (typically 10) is used.
+**
+**    This method should be called during initialization to adjust the
+**    cache size dynamically based on the hardware configuration.
+**
+** Notes:
+**    - SCFileIO::getPartitionSize() is used to obtain the partition size
+**      in a thread-safe manner.
+**    - A partition size >= 3,000,000 bytes indicates use of the custom
+**      no_ota.csv layout with a larger cache capacity.
+**    - The default cache size should be initialized before this is called.
+**
+** ===================================================================
+*/
+
+void SpotifyArtMgr::determineCacheSize()
+{
+    size_t partitionSize = SCFileIO::getInstance().getPartitionSize();
+
+    if (partitionSize >= 3000000)
+    {
+        _maxCacheSize = 60;
+        spLogI(LOGTAG_CACHE, "Custom partition detected (size: %zu). Setting max cache size to 60.", partitionSize);
+    }
+    else
+    {
+        spLogI(LOGTAG_CACHE, "Standard partition detected (size: %zu). Using default cache size: %zu.", partitionSize, _maxCacheSize);
+    }
+}
+
+/*
+** ===================================================================
 ** loadCacheIndex()
 **    Loads the cache state from a previously saved file in a simple 
 **    text format. This method restores the mapping of URLs to file 
@@ -795,6 +834,8 @@ void SpotifyArtMgr::loadCacheIndex()
 ** ===================================================================
 ** printCacheIndex()
 **    Logs the current cache state in a formatted and readable format.
+**    Check code for log levels used.
+**
 **    The log includes:
 **      - List of URLs and their associated file names in the LRU order.
 **      - The calculated checksum for the cache state.
@@ -825,7 +866,7 @@ void SpotifyArtMgr::loadCacheIndex()
 void SpotifyArtMgr::printCacheIndex(const char* tag)
 {
     spLogD(tag, "------------------------------------------------------------------------------------------");
-    spLogI(tag, "Cache:");
+    spLogD(tag, "Cache:");
 
     // If the cache is empty, indicate that
     if (_cacheList.empty())
@@ -843,7 +884,7 @@ void SpotifyArtMgr::printCacheIndex(const char* tag)
         auto it = _urlToFileMap.find(url);
         if (it != _urlToFileMap.end())
         {
-            spLogI(tag, "    \"%s\": \"%s\"", url.c_str(), it->second.c_str());
+            spLogD(tag, "    \"%s\": \"%s\"", url.c_str(), it->second.c_str());
             serializedData += url + ":" + it->second + "\n";
         }
         else

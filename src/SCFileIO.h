@@ -34,6 +34,9 @@ public:
     // Initializes the semaphore. Must be called before using the class.
     bool initialize();
 
+    // Get partition size
+    size_t getPartitionSize();
+
     // Opens a file safely using LittleFS
     File open(const char *path, const char *mode);
 

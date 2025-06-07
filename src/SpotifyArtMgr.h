@@ -89,6 +89,7 @@ private:
     SpotifyArtMgr();
 
     // Private methods
+    void     determineCacheSize();
     void     loadCacheIndex();
     bool     downloadFile(String url, String filename);
     String   generateLocalFileName();
@@ -101,7 +102,7 @@ private:
     static SpotifyArtMgr*    gInstance;
 
     // Cache configuration
-    size_t                   _maxCacheSize = 60;    // Default maximum cache size
+    size_t                   _maxCacheSize = 10;    // Default maximum cache size
 
     SemaphoreHandle_t xSemaphoreArtFetchCompleted = xSemaphoreCreateMutex();;
     bool              _isDownloadPending          = false;

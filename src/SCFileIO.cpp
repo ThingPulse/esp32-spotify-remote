@@ -100,6 +100,30 @@ bool SCFileIO::initialize()
 
 /*
 ** ===================================================================
+** getPartitionSize()
+**    Returns the total size in bytes of the mounted LittleFS partition.
+**
+** Returns:
+**    Size of the partition in bytes. Returns 0 if the value can't be retrieved
+**    or the semaphore acquisition fails.
+** ===================================================================
+*/
+size_t SCFileIO::getPartitionSize()
+{
+    if (!takeSemaphore())
+    {
+        spLogE(LOGTAG_FILEIO, "Failed to acquire semaphore for getPartitionSize().");
+        return 0;
+    }
+
+    size_t partitionSize = LittleFS.totalBytes();  // No need for FSInfo
+
+    giveSemaphore();
+    return partitionSize;
+}
+
+/*
+** ===================================================================
 ** open()
 **    Opens a file safely using LittleFS.
 **

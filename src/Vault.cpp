@@ -116,7 +116,7 @@ void Vault::initialize()
     if (!LittleFS.exists(USER_INI_PATH)) 
     {
         _useHardcodedValues = true;
-        spLogV(LOGTAG_VAULT, "%s does not exist. Using hardcoded credentials.", USER_INI_PATH);
+        spLogI(LOGTAG_VAULT, "%s does not exist. Using hardcoded credentials.", USER_INI_PATH);
         return;
     }
 
