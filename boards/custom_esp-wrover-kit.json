@@ -1,5 +1,5 @@
 {
-    "_comment": "This is a custom board configuration for an ESP32 with 8MB Flash. - Jan 8, 2025.",
+    "_comment": "This is a custom board configuration for an ESP32 with 8MB PSRAM. - Jan 8, 2025.",
     "build": {
       "arduino":{
         "ldscript": "esp32_out.ld"
