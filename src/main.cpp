@@ -19,12 +19,7 @@
 ** ===================================================================
 ** Include main library dependencies
 ** ===================================================================
-*/
-
-//
-// *** Little Fail-safe Filesystem Include ***
-//
-// #include <LittleFS.h>              
+*/        
 
 //
 // *** Task Scheduler Include ***
@@ -73,7 +68,7 @@
 ** ===================================================================
 */
 
-#include "esp_task_wdt.h"
+#include "esp_task_wdt.h"               // FreeRTOS Watchdog Timer
 
 #include "settings.h"                   // Global settings to configure app
 #include "Vault.h"                      // Credential management
@@ -90,11 +85,6 @@
 #include "SpotifyArtMgr.h"
 #include "UIViews/UIViewManager.h"
 #include "scui.h"
-
-
-// Enables DMA (Direct Memory Access) for high-speed, low-CPU-overhead data transfers.
-// Useful for tasks like display updates or SPI communication.
-#define USE_DMA
 
 /*
 ** ===================================================================
@@ -117,9 +107,6 @@ void registerMonitorDescriptions();  // Initialize the monitor descriptions
 void processPerformanceMetrics();    // Show metrics on schedule
 void handleTouchInput();             // Check if LCD pressed
 void dispatchSCUIQueueMessages();    // Dispatch messages to active view
-// void ui_loop(SCUIMessage *pMessage); // Main UI loop handler
-
-// void handle_UM_IDLE(SCUIMessage *pMessage);               // UM_IDLE
 
 // Task handles
 TaskHandle_t     UITaskHandle;
@@ -140,11 +127,11 @@ bool          bIsInitialLift  = false;
 */
 OpenFontRender    ofr;
 OpenFontRender    clockFont;
-FT6236            ts            = FT6236(TFT_HEIGHT, TFT_WIDTH);  // Touch Controller
-TFT_eSPI          tft           = TFT_eSPI();                     // LCD display
-DisplayUI         ui            = DisplayUI(&tft, &ofr, &clockFont);          // Routines to update UI
-SpotifyPlayer&    spotifyPlayer = SpotifyPlayer::getInstance();   // Spotify Player
-Vault&            vault         = Vault::getInstance();           // Credential management
+FT6236            ts            = FT6236(TFT_HEIGHT, TFT_WIDTH);     // Touch Controller
+TFT_eSPI          tft           = TFT_eSPI();                        // LCD display
+DisplayUI         ui            = DisplayUI(&tft, &ofr, &clockFont); // Routines to update UI
+SpotifyPlayer&    spotifyPlayer = SpotifyPlayer::getInstance();      // Spotify Player
+Vault&            vault         = Vault::getInstance();              // Credential management
 
 
 // Task Scheduler to use for time sync.  clockTask runs every hour to update
@@ -165,13 +152,13 @@ void setup()
 {
     // Initialize serial output
     Serial.begin(115200);
-    delay(3000); //(1000);  ... extended due to early logging being clipped or missing
+    delay(3000); // Extended due to early logging being clipped or missing
 
     // Set up logging levels
     setupLogging();
     registerMonitorDescriptions();
 
-    // TODO: clean up the way this is working
+    // Initializd DisplayUI instance
     ui.init();
 
     // Log the banner and memory stats
@@ -231,17 +218,17 @@ void setup()
         tft.fillRect(60, 20, tft.width() - 120, 130, TFT_BLACK);  
         // token not found
         ui.drawProgress("Getting Spotify token...", 70);
-        // clear text beneath the progress bar
-        // tft.fillRect(0, 290, tft.width(), 80, TFT_BLACK);        
+       
         String msg;
         msg += "From another device\n";
         msg += "on the same network,\n";
         msg += "open a browser at\nhttp://";
         msg += spotifyPlayer.getNodeName();
         msg += ".local";  
-        // ofr.cdrawString(msg.c_str(), ui.getCenterWidth(), 70);
+
         ui.cDrawString(msg.c_str(), ui.getCenterWidth(), 20, 24, TFTColor::Yellow, ui.getBackground(), "");
         spotifyPlayer.requestRefreshToken();
+
         // clear instructions
         tft.fillRect(0, 20, tft.width(), 300, TFT_BLACK); 
         ui.drawLogo();
@@ -394,7 +381,8 @@ void registerMonitorDescriptions()
 ** initialize open font render
 ** ===================================================================
 */
-void initOpenFontRender() {
+void initOpenFontRender() 
+{
   ofr.loadFont(opensans, sizeof(opensans));
   ofr.setDrawer(tft);
   ofr.setFontColor(TFT_WHITE);
@@ -413,7 +401,8 @@ void initOpenFontRender() {
 ** initialize the scheduler to update the clock
 ** ===================================================================
 */
-void initScheduler() {
+void initScheduler() 
+{
   // Set the options for the task so that it "catches up" if there is a delay
   clockTask.setSchedulingOption(TASK_SCHEDULE);
 
@@ -440,9 +429,7 @@ void initScheduler() {
 void loop()
 {
     vTaskDelay(pdMS_TO_TICKS(1000));  // Keep loop from consuming resources    
-
     schedule.execute();
-
 }
 
 /*
@@ -521,7 +508,6 @@ void processPerformanceMetrics()
     } 
 
 }
-
 
 /*
 ** ===================================================================

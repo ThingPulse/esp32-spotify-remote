@@ -360,7 +360,7 @@ void DisplayUI::drawAlbumArt(int32_t x, int32_t y, String filename)
 
     Monitor::start(MONITOR_ID_SPOTIFY_IMAGE_FILE_LOAD, LOGTAG_METRICS, "drawFsJpg(...)");
     drawFsJpg(x, y, filename.c_str(), LittleFS);
-    //drawFsJpg((_tft->width() - w) / 2, 10, filename.c_str(), LittleFS);
+
     Monitor::stop(MONITOR_ID_SPOTIFY_IMAGE_FILE_LOAD);
 
   }
@@ -509,10 +509,9 @@ void DisplayUI::drawButton(int32_t x, int32_t y, bool isPressed)
 void DisplayUI::drawBlankButton(int32_t x, int32_t y, int32_t width, int32_t height, uint8_t margin, TFTColor borderColor, bool isPressed)
 {
     
-    // const TFTColor borderColor = TFTColor::White;
-          TFTColor bodyColor   = getBackground();
-          // Invert the color
-          TFTColor pressColor  = static_cast<TFTColor>(~static_cast<uint16_t>(bodyColor));
+    TFTColor bodyColor   = getBackground();
+    // Invert the color
+    TFTColor pressColor  = static_cast<TFTColor>(~static_cast<uint16_t>(bodyColor));
 
     if (xSemaphoreTake(xSemaphoreDisplay, portMAX_DELAY)) 
     {
@@ -547,11 +546,11 @@ void DisplayUI::drawSkipTrackIcon(int32_t x, int32_t y, int32_t width, int32_t h
     if (xSemaphoreTake(xSemaphoreDisplay, portMAX_DELAY)) 
     {
         // Define basic geometry
-        const int32_t centerX = x + width / 2;
-        const int32_t centerY = y + height / 2;
-        const int32_t triangleSize = 20;
-        const int32_t lineThickness = 5; // Thickness of the vertical line
-        const int32_t offsetX = 20; // Offset to adjust positioning
+        const int32_t centerX       = x + width / 2;
+        const int32_t centerY       = y + height / 2;
+        const int32_t triangleSize  = 20;
+        const int32_t lineThickness = 5;  // Thickness of the vertical line
+        const int32_t offsetX       = 20; // Offset to adjust positioning
 
         // Determine positions based on isReversed
         const int32_t lineX = isReversed ? centerX - offsetX : centerX + offsetX - lineThickness;
@@ -569,7 +568,7 @@ void DisplayUI::drawSkipTrackIcon(int32_t x, int32_t y, int32_t width, int32_t h
             _tft->fillTriangle(
                 triangleX + 15, triangleY,          // Top point
                 triangleX + 15, triangleY + 30,     // Bottom point
-                triangleX - triangleSize, centerY, // Leftmost point
+                triangleX - triangleSize, centerY,  // Leftmost point
                 toValue(symbolColor)
             );
         } 
@@ -579,7 +578,7 @@ void DisplayUI::drawSkipTrackIcon(int32_t x, int32_t y, int32_t width, int32_t h
             _tft->fillTriangle(
                 triangleX - 15, triangleY,          // Top point
                 triangleX - 15, triangleY + 30,     // Bottom point
-                triangleX + triangleSize, centerY, // Rightmost point
+                triangleX + triangleSize, centerY,  // Rightmost point
                 toValue(symbolColor)
             );
         }
@@ -603,11 +602,11 @@ void DisplayUI::drawPlayTrackIcon(int32_t x, int32_t y, int32_t width, int32_t h
     if (xSemaphoreTake(xSemaphoreDisplay, portMAX_DELAY)) 
     {
         // Define basic geometry
-        const int32_t centerX = x + width / 2;
-        const int32_t centerY = y + height / 2;
-        const int32_t triangleSize = 20;
-        const int32_t lineThickness = 0; // Thickness of the vertical line
-        const int32_t offsetX = 20; // Offset to adjust positioning
+        const int32_t centerX       = x + width / 2;
+        const int32_t centerY       = y + height / 2;
+        const int32_t triangleSize  = 20;
+        const int32_t lineThickness = 0;  // Thickness of the vertical line
+        const int32_t offsetX       = 20; // Offset to adjust positioning
 
         // Determine positions based on isReversed
         const int32_t lineX        = centerX + offsetX - lineThickness;
@@ -619,7 +618,7 @@ void DisplayUI::drawPlayTrackIcon(int32_t x, int32_t y, int32_t width, int32_t h
         _tft->fillTriangle(
             triangleX - 15, triangleY,          // Top point
             triangleX - 15, triangleY + 30,     // Bottom point
-            triangleX + triangleSize, centerY, // Rightmost point
+            triangleX + triangleSize, centerY,  // Rightmost point
             toValue(symbolColor)
         );
 
@@ -642,10 +641,10 @@ void DisplayUI::drawPauseTrackIcon(int32_t x, int32_t y, int32_t width, int32_t 
     if (xSemaphoreTake(xSemaphoreDisplay, portMAX_DELAY)) 
     {
         // Define basic geometry
-        const int32_t centerX = x + width / 2;
-        const int32_t centerY = y + height / 2;
+        const int32_t centerX       = x + width / 2;
+        const int32_t centerY       = y + height / 2;
         const int32_t lineThickness = 5; // Thickness of the vertical line
-        const TFTColor symbolColor = TFTColor::White;
+        const TFTColor symbolColor  = TFTColor::White;
 
         // Draw vertical line '|'
         _tft->fillRect(centerX - lineThickness * 2, centerY - 15, lineThickness, 30, toValue(symbolColor));
@@ -670,12 +669,12 @@ void DisplayUI::drawBackIcon(int32_t x, int32_t y, int32_t width, int32_t height
     if (xSemaphoreTake(xSemaphoreDisplay, portMAX_DELAY)) 
     {
         // Define basic geometry
-        const int32_t centerX = x + width / 2;
-        const int32_t centerY = y + height / 2;
-        const int32_t arrowWidth = 20;
-        const int32_t arrowHeight = 10;
+        const int32_t centerX       = x + width / 2;
+        const int32_t centerY       = y + height / 2;
+        const int32_t arrowWidth    = 20;
+        const int32_t arrowHeight   = 10;
         const int32_t lineThickness = 5;
-        const TFTColor symbolColor = TFTColor::SC_NetworkSuccess; //::White;
+        const TFTColor symbolColor  = TFTColor::SC_NetworkSuccess; //::White;
         
         // Draw left-facing arrow '<-'
         // Draw the line part of the arrow
@@ -717,7 +716,7 @@ uint16_t DisplayUI::read16(fs::File &f)
 
 /*
 ** ===================================================================
-** draw32()
+** read32()
 ** ===================================================================
 */
 uint32_t DisplayUI::read32(fs::File &f) 
@@ -904,9 +903,9 @@ void DisplayUI::drawTextToLCD(const char *text, int posY)
 {
 
     int pbWidth = _tft->width() - 100;
-    int pbX = (_tft->width() - pbWidth)/2;
-    int pbY = 260;
-    int textY = posY;
+    int pbX     = (_tft->width() - pbWidth)/2;
+    int pbY     = 260;
+    int textY   = posY;
 
     if (xSemaphoreTake(xSemaphoreDisplay, portMAX_DELAY)) 
     {
@@ -936,8 +935,6 @@ void DisplayUI::drawTextToLCD(const char *text, int posY, int fontSize,  bool ig
     {
         _ofr->setFontSize(fontSize);
 
-        //_tft->setTextDatum(TL_DATUM);
-        //_ofr->setAlignment(Align::BottomLeft);
         if (ignoreText)
         {
             _tft->fillRect(0, posY, _tft->width(), fontSize + 10, toValue(getBackground()));
@@ -1080,22 +1077,8 @@ void DisplayUI::drawText(const char *text, int posX, int posY, int fontSize, TFT
     {
         _ofr->setFontSize(fontSize);
         _ofr->setAlignment(Align::BottomLeft);
-
-        // strlen(text) * 16
-        // _tft->fillRect(posX, posY, 100, fontSize + 10, toValue(TFTColor::Black)); // toValue(getBackground()));
-        // _ofr->cdrawString(text, posX, posY, toValue(getBackground()), toValue(color));
-
-        _tft->fillRect(posX - 70, posY, 140, fontSize + 10, toValue(TFTColor::Black)); // //toValue(getBackground()));  // toValue(TFTColor::Black)); //
-        // _ofr->setFontColor(toValue(color));
-        // _ofr->cdrawString(text, posX, posY,  rgb565(0xFF0000), rgb565(0x000000)); //, toValue(color), toValue(color));       
-        // _ofr->cdrawString(text, posX, posY,  rgb888_to_rgb565(toValue(color)), rgb888_to_rgb565(toValue(getBackground()))); //, toValue(color), toValue(color));   
-        // _ofr->cdrawString(text, posX, posY,  convertColorForILI9488(toValue(color)), convertColorForILI9488(toValue(TFTColor::Black))); //, toValue(color), toValue(color));   
+        _tft->fillRect(posX - 70, posY, 140, fontSize + 10, toValue(TFTColor::Black));
         _ofr->cdrawString(text, posX, posY,  toRGB565(color), toRGB565(TFTColor::Black));  
-
-        // _tft->fillRect(10, posY, 270, fontSize + 10, toValue(TFTColor::Black));  
-        // _ofr->cdrawString("RED", 50, posY, rgb888_to_rgb565(0xFF0000), rgb888_to_rgb565(0x000000)); // Red on Black
-        // _ofr->cdrawString("GREEN", 125, posY, rgb888_to_rgb565(0x00FF00), rgb888_to_rgb565(0x000000)); // Green on Black
-        // _ofr->cdrawString("BLUE", 200, posY, rgb888_to_rgb565(0x0000FF), rgb888_to_rgb565(0x000000)); // Blue on Black       
 
         xSemaphoreGive(xSemaphoreDisplay);
     }
@@ -1103,8 +1086,6 @@ void DisplayUI::drawText(const char *text, int posX, int posY, int fontSize, TFT
     {
         spLogI(LOGTAG_MULTITASK,"Unable to take xSemaphoreDisplay.");
     }
-
-
 
 }
 
@@ -1124,8 +1105,6 @@ void DisplayUI::drawString(const char *str,
                             Align           alignment, 
                             const char      *clearMask)
 {
-    // _tft->fillRect(0, _tft->height() - 10, _tft->width() , 10, toValue(TFTColor::DarkGrey));
-
     _ofr->setAlignment(alignment);
     _ofr->setFontSize(fontSize);
     uint16_t fgColor = toRGB565(fg);
@@ -1201,10 +1180,6 @@ void DisplayUI::rDrawString( const char  *str,
                             TFTColor     bg,
                             const char  *clearMask)
 {
-    // _tft->fillRect(0, _tft->height() - 10, _tft->width() , 10, toValue(TFTColor::DarkGrey));
-
-    // drawString(str, x, y, fontSize, fg, bg, Align::Right, clearMask);
-
     _ofr->setAlignment(Align::Right);
     _ofr->setFontSize(fontSize);
     uint16_t fgColor = toRGB565(fg);
@@ -1348,9 +1323,9 @@ void DisplayUI::drawClockString(
 */
 std::string DisplayUI::formatTime(long millis) {
     long totalSeconds = millis / 1000;
-    int hours = totalSeconds / 3600;
-    int minutes = (totalSeconds % 3600) / 60;
-    int seconds = totalSeconds % 60;
+    int hours         = totalSeconds / 3600;
+    int minutes       = (totalSeconds % 3600) / 60;
+    int seconds       = totalSeconds % 60;
 
     std::string result;
     
@@ -1681,7 +1656,10 @@ bool DisplayUI::jpgCalculateAverageColorCallback(int16_t x, int16_t y, uint16_t 
 // Calculate average color of JPEG file
 TFTColor DisplayUI::calculateAverageColor(const char* filename) 
 {
-    totalR = totalG = totalB = pixelCount = 0;
+    totalR     = 0;
+    totalG     = 0;
+    totalB     = 0;
+    pixelCount = 0;    
 
     spLogV(LOGTAG_PLAYER, "Entering calculateAverageColor(%s)", filename);
 

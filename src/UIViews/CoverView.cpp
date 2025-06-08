@@ -63,8 +63,6 @@ void CoverView::drawUI()
     bool            isNewTrack  = pSP->isNewTrackReady();
     PlayingMetadata playing     = pSP->getCurrentlyPlayingMetadata();
 
-    // _pUI->setBackground(TFTColor::DarkGreen);
-
     // Render back button
     _pReturnViewElement->render(false);
 

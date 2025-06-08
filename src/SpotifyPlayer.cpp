@@ -246,7 +246,6 @@ void SpotifyPlayer::nextSong()
     // Example: Sending an API request or invoking a method in the client
     spLogI(LOGTAG_PLAYER, "Skipping to the next song.");
 
-    // _pUI->drawStatusBox(TFTColor::SC_NetworkInProgress); // Making call
     postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                     "Making Call",
                     static_cast<int>(TFTColor::SC_NetworkInProgress));
@@ -254,7 +253,6 @@ void SpotifyPlayer::nextSong()
     {
         if (_pSpotify->nextTrack())
         {
-            //_pUI->drawStatusBox(TFTColor::SC_NetworkSuccess); 
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "",
                             static_cast<int>(TFTColor::SC_NetworkSuccess));
@@ -262,7 +260,6 @@ void SpotifyPlayer::nextSong()
         }
         else
         {
-            // _pUI->drawStatusBox(TFTColor::SC_NetworkFailure);
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "",
                             static_cast<int>(TFTColor::SC_NetworkFailure));            
@@ -288,7 +285,6 @@ void SpotifyPlayer::previousSong()
     // Example: Sending an API request or invoking a method in the client
     spLogI(LOGTAG_PLAYER, "Going back to the previous song.");
 
-    // _pUI->drawStatusBox(TFTColor::SC_NetworkInProgress); // Making call
     postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                     "Making Call",
                     static_cast<int>(TFTColor::SC_NetworkInProgress));    
@@ -297,7 +293,6 @@ void SpotifyPlayer::previousSong()
     {
         if (_pSpotify->previousTrack())
         {
-            // _pUI->drawStatusBox(TFTColor::SC_NetworkSuccess); 
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "",
                             static_cast<int>(TFTColor::SC_NetworkSuccess));
@@ -305,7 +300,6 @@ void SpotifyPlayer::previousSong()
         }
         else
         {
-            // _pUI->drawStatusBox(TFTColor::SC_NetworkFailure);
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "",
                             static_cast<int>(TFTColor::SC_NetworkFailure));    
@@ -336,14 +330,11 @@ void SpotifyPlayer::pauseSong()
     {
         if (_isPlaying)
         {
-            //_pUI->setBackground(TFTColor::Pink);
-            // _pUI->drawStatusBox(TFTColor::SC_NetworkInProgress); // Making call
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "Making Call",
                             static_cast<int>(TFTColor::SC_NetworkInProgress));    
             if (_pSpotify->pause())
             {
-                // _pUI->drawStatusBox(TFTColor::SC_NetworkSuccess); 
                 postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                                 "",
                                 static_cast<int>(TFTColor::SC_NetworkSuccess));
@@ -351,7 +342,6 @@ void SpotifyPlayer::pauseSong()
             }
             else
             {
-                // _pUI->drawStatusBox(TFTColor::SC_NetworkFailure);
                 postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                                 "",
                                 static_cast<int>(TFTColor::SC_NetworkFailure));   
@@ -360,13 +350,11 @@ void SpotifyPlayer::pauseSong()
         }
         else
         {
-            // _pUI->drawStatusBox(TFTColor::SC_NetworkInProgress); // Making call
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "Making Call",
                             static_cast<int>(TFTColor::SC_NetworkInProgress));    
             if (_pSpotify->play())
             {
-                // _pUI->drawStatusBox(TFTColor::SC_NetworkSuccess); 
                 postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                                 "",
                                 static_cast<int>(TFTColor::SC_NetworkSuccess));
@@ -374,7 +362,6 @@ void SpotifyPlayer::pauseSong()
             }
             else
             {
-                // _pUI->drawStatusBox(TFTColor::SC_NetworkFailure);
                 postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                                 "",
                                 static_cast<int>(TFTColor::SC_NetworkFailure));  
@@ -400,7 +387,6 @@ void SpotifyPlayer::refreshCurrentTrack()
         spLogD(LOGTAG_MULTITASK, "Free Heap: ");
         spLogD(LOGTAG_MULTITASK, "%d", ESP.getFreeHeap());
        
-        // _pUI->drawStatusBox(TFTColor::SC_NetworkInProgress); // Making call
         postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                         "Making Call",
                         static_cast<int>(TFTColor::SC_NetworkInProgress));    
@@ -412,7 +398,6 @@ void SpotifyPlayer::refreshCurrentTrack()
         if (xSemaphoreTake(_xSemaphoreNetwork, portMAX_DELAY)) 
         {
             spLogI(LOGTAG_MULTITASK, "Invoking spotify.getCurrentlyPlaying(...)");
-            // vTaskDelay(pdMS_TO_TICKS(200));
             Monitor::start(MONITOR_ID_SPOTIFY_GET_CURRENTLY_PLAYING, LOGTAG_METRICS, "spotify.getCurrentlyPlaying(...)");
             status = _pSpotify->getCurrentlyPlaying(SpotifyPlayer::getCurrentlyPlayingCallback, SP_SPOTIFY_MARKET);
             Monitor::stop(MONITOR_ID_SPOTIFY_GET_CURRENTLY_PLAYING);
@@ -427,7 +412,6 @@ void SpotifyPlayer::refreshCurrentTrack()
         if (status == 200)
         {
             spLogI(LOGTAG_MULTITASK, "Successfully refreshed current song.");
-            // _pUI->drawStatusBox(TFTColor::SC_NetworkSuccess); // Successful
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "Successful",
                             static_cast<int>(TFTColor::SC_NetworkSuccess));
@@ -435,7 +419,6 @@ void SpotifyPlayer::refreshCurrentTrack()
         else if (status == 204)
         {
             spLogI(LOGTAG_MULTITASK, "Doesn't seem to be anything playing");
-            // _pUI->drawStatusBox(TFTColor::SC_AlertStatus); // Nothing playing
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "Nothing playing",
                             static_cast<int>(TFTColor::SC_AlertStatus));
@@ -444,7 +427,6 @@ void SpotifyPlayer::refreshCurrentTrack()
         else if (status == -777)
         {
             spLogI(LOGTAG_MULTITASK, "No, really, unable to get semaphore.  status still -777");
-            // _pUI->drawStatusBox(TFTColor::SC_AlertStatus); // Unable to get semaphore     
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "Unable to get semaphore",
                             static_cast<int>(TFTColor::SC_AlertStatus));
@@ -453,7 +435,6 @@ void SpotifyPlayer::refreshCurrentTrack()
         {
             spLogE(LOGTAG_MULTITASK, "Error: ");
             spLogE(LOGTAG_MULTITASK, "Status: %d", status);
-            // _pUI->drawStatusBox(TFTColor::SC_NetworkFailure); // Failure
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "Failure",
                             static_cast<int>(TFTColor::SC_NetworkFailure));
@@ -471,17 +452,6 @@ void SpotifyPlayer::refreshCurrentTrack()
         postScuiMessage(SCUIMessageType::UM_PLAYER_REFRESH,
                         "Refresh",
                         _isNewTrackReady);
-
-        // spLogI(LOGTAG_GENERAL,"trying to get release year...");
-        // int releaseYear = getAlbumReleaseYear();
-        // if (releaseYear > 0) 
-        // {
-        //     spLogI(LOGTAG_GENERAL,"Release Year: %d", releaseYear);
-        // } 
-        // else 
-        // {
-        //     spLogE(LOGTAG_GENERAL,"Failed to retrieve release year.");
-        // }
 }
 
 /*
@@ -563,7 +533,6 @@ void SpotifyPlayer::refreshCoverArt()
         }
         if (_isCoverArtAvailable)
         {
-
             // TFTColor c = _pUI->calculateAverageColor(filePath.c_str());
             // _pUI->setBackground(c, false);
         }
@@ -573,7 +542,6 @@ void SpotifyPlayer::refreshCoverArt()
         }
 
         // request updated UI
-        // _pUI->markUIDirty(true);
         postScuiMessage(SCUIMessageType::UM_MARK_DIRTY,
                         "",
                         true);        
@@ -630,7 +598,6 @@ void SpotifyPlayer::refreshCurrentSong(CurrentlyPlaying currentlyPlaying)
     {
         spLogI(LOGTAG_MULTITASK, "refreshCurrentSong() - Empty track detected");
         _isMusicAvailable = false; 
-        // _pUI->markUIDirty(true); 
         // force a refresh to get the waiting message
         postScuiMessage(SCUIMessageType::UM_MARK_DIRTY,
                         "",
@@ -755,13 +722,10 @@ void SpotifyPlayer::saveCache()
 
     if (pSAM->isCacheDirty())
     {
-        // _pUI->drawStatusBox(TFTColor::SC_CacheSave);
         postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                         "",
                         static_cast<int>(TFTColor::SC_CacheSave));  
-        // vTaskDelay(pdMS_TO_TICKS(200)); // 200 ms delay.. give time to see
         pSAM->saveCacheIndex(); // persist the updated file index
-        // _pUI->drawStatusBox(_pUI->getBackground());
     }
 
     // clear status.  this assumes that this is the last

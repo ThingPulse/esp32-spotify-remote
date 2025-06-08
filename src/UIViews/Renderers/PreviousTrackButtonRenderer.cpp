@@ -33,7 +33,6 @@
 */
 void PreviousTrackButtonRenderer::render(const UIElement& element, bool isPressed)
 {
-    // _pUI->drawButton(element.getX(), element.getY(), isPressed);
     _pUI->drawBlankButton(element.getX(), element.getY(), element.getWidth(), element.getHeight(), 2, TFTColor::White, isPressed);
     _pUI->drawSkipTrackIcon(element.getX(), element.getY(), element.getWidth(), element.getHeight(), true);
 }

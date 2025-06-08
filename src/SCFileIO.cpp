@@ -95,7 +95,6 @@ bool SCFileIO::initialize()
         return false;
     }
 
-  
 }
 
 /*
@@ -466,17 +465,16 @@ void SCFileIO::hexDump(const char* tag, const char* filePath)
     Serial.printf("Hex Dump of file: %s\n", filePath);
     Serial.printf("-----------------------------------------------------------------------------\n");
 
-    uint8_t buffer[16];  // Buffer to hold 16 bytes per line
-    size_t fileOffset = 0; // Tracks current offset in the file
-
-    char hexLine[50];    // 16 bytes * 3 chars (hex) + 1 space after 8th byte + null terminator
-    char asciiLine[17];  // 16 bytes + null terminator
+    uint8_t buffer[16];       // Buffer to hold 16 bytes per line
+    size_t  fileOffset = 0;   // Tracks current offset in the file
+    char    hexLine[50];      // 16 bytes * 3 chars (hex) + 1 space after 8th byte + null terminator
+    char    asciiLine[17];    // 16 bytes + null terminator
 
     while (file.available())
     {
         size_t bytesRead = file.read(buffer, sizeof(buffer)); // Read up to 16 bytes
-        memset(hexLine, ' ', sizeof(hexLine)); // Initialize with spaces for alignment
-        memset(asciiLine, '\0', sizeof(asciiLine)); // Null-terminate ASCII buffer
+        memset(hexLine, ' ', sizeof(hexLine));                // Initialize with spaces for alignment
+        memset(asciiLine, '\0', sizeof(asciiLine));           // Null-terminate ASCII buffer
 
         for (size_t i = 0; i < bytesRead; ++i)
         {

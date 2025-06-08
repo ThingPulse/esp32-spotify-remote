@@ -99,10 +99,6 @@ void DiagnosticsView::drawUI()
 */
 void DiagnosticsView::clearAndPaintScreen(PlayingMetadata playing)
 {
-    // #define APP_NAME "Spotify Companion - Feb 2025"
-    // #define VERSION  "0.5.19"
-    // #define COMPILE_TIME (__DATE__ " " __TIME__)
-
     const int     fontSize = 18;
     const int32_t xStart   = 240;
     char s[100];
@@ -277,12 +273,7 @@ void DiagnosticsView::refreshScreen(PlayingMetadata playing, bool isForcedRefres
     static std::string heapLine  = "";
     uint32_t           heapSize  = Monitor::getFreeHeap();
     Monitor::HeapStats heapStats = Monitor::getHeapStats();
-    // multi_heap_info_t  heapInfo;
 
-    // heap_caps_get_info(&heapInfo, MALLOC_CAP_8BIT);
-
-    // size_t totalHeap = heapInfo.total_free_bytes + heapInfo.total_allocated_bytes;
-    // spLogI(LOGTAG_GENERAL,"th: %u tfb: %u tab: %u hs: %u", totalHeap, heapInfo.total_free_bytes, heapInfo.total_allocated_bytes, heapSize );
     // Approximate percentage remaining based on max we've seen
     float remainingPercentage = (float)heapSize / (float)heapStats.maxHeap * 100.0f;
 
@@ -404,8 +395,7 @@ void DiagnosticsView::enteringView()
 {
     // spLogI(LOGTAG_GENERAL, "*** ENTERING  DiagnosticsView::enteringView() ===");
     _pUI->setSplitBackground(false);
-    // Make sure the UI is painted fresh
-    // _pUI->setBackground(TFTColor::SC_LowHeap, true);
+
     _pUI->setBackground(TFTColor::Black, false);
 
     // force repaint to get latest album details and to get background updates

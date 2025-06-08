@@ -55,7 +55,7 @@ private:
     void handleDate(bool isForceRefresh);
     bool refreshPlayingProgress();
     // Time management variables
-    unsigned long _requestDueTime = 0;     // time when request due
+    unsigned long _requestDueTime = 0;            // time when request due
     uint8_t       _displayPercentage    = 0;      // what is being displayed as the percentage
     long          _forecastedProgressMS = 0;      // forcasted progress into the song  
 };

@@ -34,6 +34,7 @@ public:
     UIElement(int16_t x, int16_t y, int16_t width, int16_t height);
 
     /*
+    ** ===================================================================    
     ** isPressed()
     **    Checks if a given point is within the bounds of this UI element.
     **
@@ -42,6 +43,7 @@ public:
     **
     ** Returns:
     **    True if the point is within the bounds, otherwise false.
+    ** ===================================================================    
     */
     bool isPressed(const TS_Point& point) const;
 
@@ -68,9 +70,9 @@ public:
    int16_t getHeight() const { return _height; }   
 
 private:
-    int16_t                      _x;      // X-coordinate of the top-left corner
-    int16_t                      _y;      // Y-coordinate of the top-left corner
-    int16_t                      _width;  // Width of the element
-    int16_t                      _height; // Height of the element
-    std::shared_ptr<IUIRenderer> _renderer; ///< Renderer instance for drawing the element.
+    int16_t                      _x;        // X-coordinate of the top-left corner
+    int16_t                      _y;        // Y-coordinate of the top-left corner
+    int16_t                      _width;    // Width of the element
+    int16_t                      _height;   // Height of the element
+    std::shared_ptr<IUIRenderer> _renderer; // Renderer instance for drawing the element.
 };

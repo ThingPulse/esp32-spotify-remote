@@ -151,7 +151,6 @@ void UIView::enteringView()
 */    
 void UIView::leavingView()
 {
-    // _pUI->setBackground(TFTColor::Black, true);
     // spLogI(LOGTAG_GENERAL, "*** ENTERING  UIView::leavingView() ===");
     _pUI->clearScreen();
     // spLogI(LOGTAG_GENERAL, "*** EXITING  UIView::leavingView() ===");
@@ -191,22 +190,19 @@ void UIView::onTouchDown(const TS_Point& point)
     {
         _pUI->showTouchDown(TFTColor::SC_PreviousTrack);
         _pPreviousElement->render(true);
-        spotifyPlayer.previousSong();
-        // spotifyPlayer.refreshCurrentTrack();   
+        spotifyPlayer.previousSong();  
     }
     else if (_pNextElement 
          &&  _pNextElement->isPressed(point)) 
     {
         _pUI->showTouchDown(TFTColor::SC_NextTrack);
         _pNextElement->render(true);
-        spotifyPlayer.nextSong();
-        // spotifyPlayer.refreshCurrentTrack();       
+        spotifyPlayer.nextSong();      
     }
     else if (_pGotoCoverArtElement 
          &&  _pGotoCoverArtElement->isPressed(point)) 
     {
         // Handle art button press
-        // UIViewManager::getInstance().advanceView();
         UIViewManager::getInstance().gotoView(UIViewManager::ViewID::Cover);
     }
     else if (_pGotoDiagnosticElement

@@ -20,7 +20,7 @@
 /*
 ** ===================================================================
 ** render()
-**    Renders the "Previous Track" button.
+**    Renders the "Next Track" button.
 **
 ** Parameters:
 **    element   - Reference to the UI element being rendered.
@@ -33,7 +33,6 @@
 */
 void NextTrackButtonRenderer::render(const UIElement& element, bool isPressed)
 {
-    // _pUI->drawButton(element.getX(), element.getY(), isPressed);
     _pUI->drawBlankButton(element.getX(), element.getY(), element.getWidth(), element.getHeight(), 2, TFTColor::White, isPressed);
     _pUI->drawSkipTrackIcon(element.getX(), element.getY(), element.getWidth(), element.getHeight(), false);
 }

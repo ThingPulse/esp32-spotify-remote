@@ -84,9 +84,7 @@ private:
     void   refreshCurrentTrack();
     void   refreshCurrentSong(CurrentlyPlaying currentlyPlaying); // Call back
     void   refreshCoverArt();
-
     void   postScuiMessage(SCUIMessageType type, const String& str, int num);
-
     void   saveCache();
 
 };

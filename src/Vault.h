@@ -33,6 +33,12 @@
 #include <Arduino.h>
 #include <array>
 
+// Max sizes (unencrypted):
+// SSID                  - Per 802.11 standard, 32 characters
+// WiFi Password         - WPA2/WPA3 maxiumum password length 64 characters
+// Spotify Client Id     - 32 characters
+// Spotify Client Secret - 40 characters 
+// With encryption and base64 encoding, lengths could go as high a 108 characters.
 #define VAULT_MAX_CRED_LENGTH 150
 
 // Defines the levels of credential privacy supported by the Vault.
@@ -70,12 +76,6 @@ private:
     void                    printEncryptionHints();
     bool                    _useHardcodedValues   = true;
     VaultPrivacyLevel       _privacyLevel          = VaultPrivacyLevel::None;
-    // Max sizes (unencrypted):
-    // SSID                  - Per 802.11 standard, 32 characters
-    // WiFi Password         - WPA2/WPA3 maxiumum password length 64 characters
-    // Spotify Client Id     - 32 characters
-    // Spotify Client Secret - 40 characters 
-    // With encryption and base64 encoding, lengths could go as high a 108 characters.
     std::array<char, VAULT_MAX_CRED_LENGTH>   _ssid{};
     std::array<char, VAULT_MAX_CRED_LENGTH>   _wifiPwd{};
     std::array<char, VAULT_MAX_CRED_LENGTH>   _clientId{};

@@ -151,8 +151,7 @@ void ClockView::drawUI()
         _pUI->drawProgressBar(60, 170, 410, 20, 0, TFTColor::White, TFTColor::Black);
         _pUI->drawProgressBar(60, 170, 410, 20, _displayPercentage, TFTColor::White, progressBarColor);
            
-        _pUI->setJpgScaleToTiny();
-        // _pUI->drawAlbumArt(230, 280, filePath);        
+        _pUI->setJpgScaleToTiny();     
         _pUI->drawAlbumArt(10, 160, filePath); 
 
         ///// Draw play duration
@@ -385,7 +384,7 @@ void ClockView::enteringView()
 {
     _pUI->setSplitBackground(true);
     // Make sure the UI is painted fresh
-    _pUI->setBackground(TFTColor::DarkestGreen, false); //true);
+    _pUI->setBackground(TFTColor::DarkestGreen, false);
     _pUI->clearScreenHome();  
     _pUI->drawClockTime(true);
     _pUI->markUIDirty(true); // force refresh to get album details

@@ -76,12 +76,12 @@ public:
     void logError(const char* tag, const char* format, ...);
 
 private:
-    SCLogger() = default;                     // Private constructor
-    SCLogger(const SCLogger&) = delete;       // Prevent copy
-    SCLogger& operator=(const SCLogger&) = delete; // Prevent assignment
+    SCLogger() = default;                             // Private constructor
+    SCLogger(const SCLogger&) = delete;               // Prevent copy
+    SCLogger& operator=(const SCLogger&) = delete;    // Prevent assignment
     void logMessage(esp_log_level_t level, const char* tag, const char* format, va_list args);
     std::map<std::string, esp_log_level_t> tagLevels; // Map to store log levels per tag
-    std::mutex mutex;                          // Mutex to protect the map
+    std::mutex mutex;                                 // Mutex to protect the map
 };
 // Define this to enable logging; comment out to disable
 #define ENABLE_SCLOGGING

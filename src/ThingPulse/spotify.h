@@ -40,10 +40,7 @@ extern const char *spotify_image_server_cert;
 // the spotify-api-arduino library sets this to 1 (i.e. enabled) by default
 #define SPOTIFY_DEBUG 0
 //#define SPOTIFY_DEBUG 1
-
-// 1/2/2025:
 #define SPOTIFY_SERIAL_OUTPUT 0
-// 1/2/2025:
 #define SPOTIFY_PRINT_JSON_PARSE 0
 
 #define SPOTIFY_REFRESH_TOKEN_FILE_NAME "/refresh-token.txt"
@@ -52,9 +49,7 @@ extern const char *spotify_image_server_cert;
 
 
 String authCode = "";
-//String scope = "user-read-playback-state%20user-modify-playback-state";
-String scope = "user-read-playback-state%20user-modify-playback-state%20user-library-read";
-//user-read-playback-state and user-library-read scopes 
+String scope    = "user-read-playback-state%20user-modify-playback-state";
 WebServer server(80);
 WiFiClientSecure client;
 

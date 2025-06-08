@@ -35,7 +35,6 @@
 */
 void PlayPauseButtonRenderer::render(const UIElement& element, bool isPressed)
 {
-    // _pUI->drawButton(element.getX(), element.getY(), isPressed);
     _pUI->drawBlankButton(element.getX(), element.getY(), element.getWidth(), element.getHeight(), 2, TFTColor::White, isPressed);
 
     if (SpotifyPlayer::getInstance().getCurrentlyPlayingMetadata().isPlaying)

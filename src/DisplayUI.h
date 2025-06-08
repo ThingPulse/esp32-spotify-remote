@@ -20,7 +20,6 @@
 #pragma once
 
 #include <FS.h>
-// #include <LittleFS.h>
 #include <OpenFontRender.h>
 #include <TFT_eSPI.h>
 
@@ -116,13 +115,13 @@ public:
     void drawPauseTrackIcon(int32_t x, int32_t y, int32_t width, int32_t height);
     void drawBackIcon(int32_t x, int32_t y, int32_t width, int32_t height);
 
-    void     setBackground(TFTColor color, bool bRepaint=true);
-    TFTColor getBackground() const;
-    bool     isSplitBackground() const;
-    void     setSplitBackground(bool isSplitBackground = false);
-    void clearScreen();
-    void clearScreenKeepArt();
-    void clearScreenHome();
+    void        setBackground(TFTColor color, bool bRepaint=true);
+    TFTColor    getBackground() const;
+    bool        isSplitBackground() const;
+    void        setSplitBackground(bool isSplitBackground = false);
+    void        clearScreen();
+    void        clearScreenKeepArt();
+    void        clearScreenHome();
     std::string formatTime(long millis); 
 
     void drawTextToLCD(const char *text, int posY);
@@ -139,12 +138,12 @@ public:
                     const char  *clearMask);
 
     void cDrawString(const char *str,
-        int32_t x,
-        int32_t y,
-        unsigned int fontSize,
-        TFTColor fg,
-        TFTColor bg,
-        const char  *clearMask);
+                    int32_t x,
+                    int32_t y,
+                    unsigned int fontSize,
+                    TFTColor fg,
+                    TFTColor bg,
+                    const char  *clearMask);
 
     void lDrawString(const char *str,
                     int32_t x,
@@ -195,7 +194,6 @@ private:
     OpenFontRender *_clockFont;
     TFTColor       _bgColor             = TFTColor::BlueThinkPulse;
     bool           _isSplitBackground   = false;
-    // ViewID         _viewID              = ViewID::Home;
     bool           _isUIDirty           = false;
     bool           _isPainting          = true; 
     SemaphoreHandle_t xSemaphoreDisplay = xSemaphoreCreateMutex();
