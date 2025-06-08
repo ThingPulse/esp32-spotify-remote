@@ -107,8 +107,34 @@ Add "http://tp-spotify.local/callback/" to the Redirect URIs section.
 
    **Don't forget to save your settings.**
 
-4. Set the unique Client ID and Client Secret as values for the respective variables in `spotify.h`.
+4. Set the unique Client ID and Client Secret as values for the respective variables in `src/spotify.h`.
 
    <img src="./images/SpotifyClientId.png" width="400">
 
+### Filesystem setup
 
+5. Upload the file system to the device
+
+- Hit the PlatformIO icon on the navigation bar on the left side (alien face).
+
+- Select the Platform > Upload Filesystem Image task.  Unless you later erase the flash or modify certain files, you only need to do this once if it succeeds. Pay attention to the output in the VS Code console that opens. If it reports any errors like e.g. if it cannot connect to the board or if stops midway, close VS Code completely, restart it, and then repeat the process.
+
+ <img src="./images/platformio-filesystem.png" width="400">
+
+- If startup fails with the following message displayed: "FATAL ERROR - Filesystem Not Initialized", this step was not successful or done.
+
+### User settings
+
+6. The fastest way to get up and running is to open the `src/settings.h` file and adjust the handful of configuration parameters in the "User settings" section at the top. They are all documented inside the file directly. Everything should be self-explanatory.  The spotify settings were updated in step 4 above.
+
+ <img src="./images/UserSettings.png" width="400">
+
+See [full user settings documentation](./documentation/UserSettings.md) for details about all available fields, encryption options, and using `user.ini`.
+
+ ### Upload code to device
+
+ 7. Select the General > Upload and Monitor task. You do this every time you change code or settings.h.
+
+  <img src="./images/platformio-task-upload.png" width="400">
+
+See [instructions](https://docs.thingpulse.com/guides/esp32-color-kit-grande/#development-environment) if you encounter problems and need Trouble Shooting tips.
