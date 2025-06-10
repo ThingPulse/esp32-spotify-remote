@@ -24,6 +24,8 @@
 #include "settings.h"
 #include "Renderers/BackButtonRenderer.h"
 #include "esp_heap_caps.h"
+#include "Vault.h"
+#include "SpotifyArtMgr.h"
 
 /*
 ** ===================================================================
@@ -119,8 +121,15 @@ void DiagnosticsView::clearAndPaintScreen(PlayingMetadata playing)
     // **** Track Progress Header *****=
     _pUI->lDrawString("progressMs / durationMs :: lastRefreshMs (Pct)", 10, rowToY(4), fontSize, TFTColor::DarkGreen, TFTColor::Black,"");
 
-    // **** Compile / Version Information *****
-    std::string versionStr = std::string("Version: ") + VERSION;
+    // **** Compile / Version / Config Information *****
+    char buffer[40];
+    snprintf(buffer, sizeof(buffer), "Config: %c %c %d",
+             toString(Vault::getInstance().getCredentialSource())[0],
+             toString(Vault::getInstance().getPrivacyLevel())[0],
+             SpotifyArtMgr::getInstance()->getMaxCacheSize());    
+    std::string configInfo = std::string(buffer);
+
+    std::string versionStr = std::string("Version: ") + VERSION + " - " + configInfo;
     _pUI->lDrawString(versionStr.c_str(), 90, rowToY(12), fontSize, TFTColor::DarkGrey, TFTColor::Black,"#### ################## ####");
     versionStr = std::string("Compile: ") + COMPILE_TIME; 
     _pUI->lDrawString(versionStr.c_str(), 90, rowToY(13), fontSize, TFTColor::DarkGrey, TFTColor::Black,"#### ################## ####");

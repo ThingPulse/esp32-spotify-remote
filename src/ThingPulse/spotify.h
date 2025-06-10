@@ -22,7 +22,6 @@
 #include <ArduinoJson.h>
 #include <ESPmDNS.h>
 #include <SpotifyArduino.h>
-// #include <SpotifyArduinoCert.h>
 #include <WebServer.h>
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -52,6 +51,13 @@ String authCode = "";
 String scope    = "user-read-playback-state%20user-modify-playback-state";
 WebServer server(80);
 WiFiClientSecure client;
+
+// Note: SpotifyArduino does not initialize its _refreshToken pointer.
+// When declared as a global, this works because globals are zero-initialized by default,
+// making _refreshToken safely nullptr. If the instance is created dynamically or locally,
+// this assumption can lead to heap corruption when delete is called on an uninitialized
+// _refreshToken in setRefreshToken().
+SpotifyArduino spotify(client);
 
 const char *webpageTemplate =
     R"(
@@ -129,8 +135,6 @@ String fetchSpotifyAuthCode() {
     log_i("MDNS responder started for node name '%s'.", SPOTIFY_ESPOTIFIER_NODE_NAME);
     log_i("Open browser at http://%s.local", SPOTIFY_ESPOTIFIER_NODE_NAME);
   }
-
-  //printRootWebpage();
 
   server.on("/", handleRoot);
   server.on("/callback/", handleCallback);

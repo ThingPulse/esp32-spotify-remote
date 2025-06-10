@@ -83,11 +83,8 @@ void SpotifyPlayer::initialize(QueueHandle_t    *pScuiQueue)
     _spotifyClientId     = Vault::getInstance().getSpotifyClientID();
     _spotifyClientSecret = Vault::getInstance().getSpotifyClientSecret();
 
-   _pSpotify = new SpotifyArduino(
-        client,
-        _spotifyClientId.c_str(),
-        _spotifyClientSecret.c_str()
-    );    
+    spotify.lateInit(_spotifyClientId.c_str(), _spotifyClientSecret.c_str(), _spotifyRefreshToken.c_str());
+
     // client is defined in ThingPulse/spotify.h
     client.setCACert(spotify_server_cert);  
     
@@ -168,7 +165,7 @@ bool SpotifyPlayer::requestRefreshToken()
     spLogI(LOGTAG_PLAYER, "Requesting Spotify refresh token through the browser via auth code.");
 
     String spotifyAuthCode = fetchSpotifyAuthCode();
-    _spotifyRefreshToken = _pSpotify->requestAccessTokens(spotifyAuthCode.c_str(), SPOTIFY_REDIRECT_URI);
+    _spotifyRefreshToken = spotify.requestAccessTokens(spotifyAuthCode.c_str(), SPOTIFY_REDIRECT_URI);
     SCFileIO::getInstance().saveFsString(SPOTIFY_REFRESH_TOKEN_FILE_NAME, _spotifyRefreshToken);
 
     return true;
@@ -196,8 +193,8 @@ void SpotifyPlayer::login()
     // - keeps track of the refresh token and its TTL internally
     // - automatically renews the actual access token using the refresh token
     // -> see SpotifyArduino.h#autoTokenRefresh and SpotifyArduino::checkAndRefreshAccessToken() (called before every API function)
-    _pSpotify->setRefreshToken(_spotifyRefreshToken.c_str());
-    _pSpotify->refreshAccessToken();
+    spotify.setRefreshToken(_spotifyRefreshToken.c_str());
+    spotify.refreshAccessToken();
     spLogI(LOGTAG_PLAYER, "Authentication against Spotify done. Refresh token: %s", _spotifyRefreshToken.c_str());    
 }
 
@@ -251,7 +248,7 @@ void SpotifyPlayer::nextSong()
                     static_cast<int>(TFTColor::SC_NetworkInProgress));
     if (xSemaphoreTake(_xSemaphoreNetwork, portMAX_DELAY)) 
     {
-        if (_pSpotify->nextTrack())
+        if (spotify.nextTrack())
         {
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "",
@@ -291,7 +288,7 @@ void SpotifyPlayer::previousSong()
 
     if (xSemaphoreTake(_xSemaphoreNetwork, portMAX_DELAY)) 
     {
-        if (_pSpotify->previousTrack())
+        if (spotify.previousTrack())
         {
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "",
@@ -333,7 +330,7 @@ void SpotifyPlayer::pauseSong()
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "Making Call",
                             static_cast<int>(TFTColor::SC_NetworkInProgress));    
-            if (_pSpotify->pause())
+            if (spotify.pause())
             {
                 postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                                 "",
@@ -353,7 +350,7 @@ void SpotifyPlayer::pauseSong()
             postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                             "Making Call",
                             static_cast<int>(TFTColor::SC_NetworkInProgress));    
-            if (_pSpotify->play())
+            if (spotify.play())
             {
                 postScuiMessage(SCUIMessageType::UM_STATUS_BOX,
                                 "",
@@ -399,7 +396,7 @@ void SpotifyPlayer::refreshCurrentTrack()
         {
             spLogI(LOGTAG_MULTITASK, "Invoking spotify.getCurrentlyPlaying(...)");
             Monitor::start(MONITOR_ID_SPOTIFY_GET_CURRENTLY_PLAYING, LOGTAG_METRICS, "spotify.getCurrentlyPlaying(...)");
-            status = _pSpotify->getCurrentlyPlaying(SpotifyPlayer::getCurrentlyPlayingCallback, SP_SPOTIFY_MARKET);
+            status = spotify.getCurrentlyPlaying(SpotifyPlayer::getCurrentlyPlayingCallback, SP_SPOTIFY_MARKET);
             Monitor::stop(MONITOR_ID_SPOTIFY_GET_CURRENTLY_PLAYING);
             xSemaphoreGive(_xSemaphoreNetwork);
         }

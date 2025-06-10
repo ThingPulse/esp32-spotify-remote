@@ -51,6 +51,16 @@ enum class VaultPrivacyLevel
     Better  // Use AES-encrypted credentials; tied to device MAC address, non-reusable
 };
 
+// Defines credential source
+enum class CredentialSource
+{
+    Hardcoded,   // Plaintext hardcoded values
+    INIFile,     // Loaded values from the ini file
+};
+
+const char* toString(VaultPrivacyLevel level);
+const char* toString(CredentialSource source);
+
 // Vault definition
 class Vault
 {
@@ -59,6 +69,8 @@ public:
 
     void              setPrivacyLevel(VaultPrivacyLevel level);
     VaultPrivacyLevel getPrivacyLevel();
+    CredentialSource  getCredentialSource();
+
     void              initialize();
     void              eraseEncryptedCredentials();
 

@@ -76,6 +76,7 @@ public:
     static SpotifyArtMgr* getInstance();
 
     void        setMaxCacheSize(size_t maxSize);
+    size_t      getMaxCacheSize();
     void        saveCacheIndex();
     bool        isCacheDirty();
 

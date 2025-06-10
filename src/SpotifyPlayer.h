@@ -20,9 +20,6 @@
 #include "DisplayUI.h"
 #include "PlayingMetadata.h"
 #include "scui.h"
-
-// Forward declaration to avoid including full spotify.h in the header
-class SpotifyArduino;
 class SpotifyPlayer {
 public:
     // Public method to access the singleton instance
@@ -53,7 +50,6 @@ public:
 private:
     // Member variables
     String              _spotifyRefreshToken   = "";
-    // DisplayUI           *_pUI;
     QueueHandle_t       *_pScuiQueue; 
     String              _currentTrackUri       = "";        // Tracks the currently playing song
     bool                _isPlaying             = false;
@@ -66,7 +62,6 @@ private:
     SemaphoreHandle_t   _xSemaphoreNetwork     = xSemaphoreCreateMutex();
     SemaphoreHandle_t   _xSemaphoreDataCopy    = xSemaphoreCreateMutex();
     TaskHandle_t        _refreshTaskHandle;
-    SpotifyArduino      *_pSpotify             = nullptr;
     String              _spotifyClientId;
     String              _spotifyClientSecret;
 

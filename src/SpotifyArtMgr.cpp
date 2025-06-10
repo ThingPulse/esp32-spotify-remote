@@ -696,6 +696,20 @@ void SpotifyArtMgr::determineCacheSize()
 
 /*
 ** ===================================================================
+** getMaxCacheSize()
+**    Returns the current maximum cache size used for album art.
+**
+** Returns:
+**    size_t - The maximum number of cached album art entries.
+** ===================================================================
+*/
+size_t SpotifyArtMgr::getMaxCacheSize()
+{
+    return _maxCacheSize;
+}
+
+/*
+** ===================================================================
 ** loadCacheIndex()
 **    Loads the cache state from a previously saved file in a simple 
 **    text format. This method restores the mapping of URLs to file 

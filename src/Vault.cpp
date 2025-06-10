@@ -59,6 +59,25 @@ const char* toString(VaultPrivacyLevel level)
 
 /*
 ** ===================================================================
+** toString(CredentialSource)
+**
+**    Converts a CredentialSource enum value to its corresponding
+**    string representation for logging, diagnostics, and debugging.
+** ===================================================================
+*/
+const char* toString(CredentialSource source)
+{
+    switch (source)
+    {
+        case CredentialSource::Hardcoded: return "Hardcoded";
+        case CredentialSource::INIFile:   return "INIFile";
+        default:                          return "Unknown";
+    }
+}
+
+
+/*
+** ===================================================================
 ** getInstance()
 **
 **    Returns the singleton instance of Vault. Initializes it if needed.
@@ -263,6 +282,23 @@ void Vault::setPrivacyLevel(VaultPrivacyLevel level)
 VaultPrivacyLevel Vault::getPrivacyLevel()
 {
     return _privacyLevel;
+}
+
+/*
+** ===================================================================
+** getCredentialSource()
+**
+**    Returns the current source of credentials in use.
+**    If _useHardcodedValues is true, credentials are coming from
+**    settings.h; otherwise, they are sourced from user.ini.
+**
+** Returns:
+**    CredentialSource enum value indicating the source.
+** ===================================================================
+*/
+CredentialSource Vault::getCredentialSource()
+{
+    return _useHardcodedValues ? CredentialSource::Hardcoded : CredentialSource::INIFile;
 }
 
 /*
