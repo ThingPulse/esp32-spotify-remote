@@ -556,9 +556,7 @@ void SpotifyPlayer::refreshCoverArt()
 */
 void SpotifyPlayer::refreshCurrentSong(CurrentlyPlaying currentlyPlaying)
 {
-    // Use the details in this method or if you want to store them
-    // make sure you copy them (using something like strncpy)
-    // const char* artist =
+
     spLogI(LOGTAG_MULTITASK, "Refreshing current song.  SpotifyPlayer::refreshCurrentSong(CurrentlyPlaying currentlyPlaying)");
 
     // If not a track or episode, update the UI accordingly and indicate music isn't available

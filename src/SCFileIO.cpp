@@ -446,7 +446,7 @@ void SCFileIO::giveSemaphore()
 void SCFileIO::hexDump(const char* tag, const char* filePath)
 {
 
-    spLogI(tag, "attempting hexDump in SCFileIO::hexDump()... ");
+    spLogV(tag, "attempting hexDump in SCFileIO::hexDump()... ");
     // Check if logging level is at least verbose
     if (SCLogger::getInstance().getLogLevel(tag) < ESP_LOG_VERBOSE)
     {

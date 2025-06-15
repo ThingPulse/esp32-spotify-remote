@@ -36,16 +36,9 @@ extern const char *spotify_image_server_cert;
 // If you change the value here, you need to modify the redirect URI on Spotify as well.
 #define SPOTIFY_ESPOTIFIER_NODE_NAME "tp-spotify"
 
-// the spotify-api-arduino library sets this to 1 (i.e. enabled) by default
-#define SPOTIFY_DEBUG 0
-//#define SPOTIFY_DEBUG 1
-#define SPOTIFY_SERIAL_OUTPUT 0
-#define SPOTIFY_PRINT_JSON_PARSE 0
-
 #define SPOTIFY_REFRESH_TOKEN_FILE_NAME "/refresh-token.txt"
 // the '/callback/' path is essential as spotify.h#fetchSpotifyAuthCode() registers a handler for it
 #define SPOTIFY_REDIRECT_URI "http%3A%2F%2F" SPOTIFY_ESPOTIFIER_NODE_NAME ".local%2Fcallback%2F"
-
 
 String authCode = "";
 String scope    = "user-read-playback-state%20user-modify-playback-state";

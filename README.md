@@ -138,3 +138,7 @@ See [full user settings documentation](./documentation/UserSettings.md) for deta
   <img src="./images/platformio-task-upload.png" width="400">
 
 See [instructions](https://docs.thingpulse.com/guides/esp32-color-kit-grande/#development-environment) if you encounter problems and need Trouble Shooting tips.
+
+## Tips and Known Issues
+
+To see a list of tips and known issues, see [Tips and Known Issues](./documentation/TipsAndKnownIssues.md).

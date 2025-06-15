@@ -1,6 +1,6 @@
 # Color Kit Grande Spotify Controller User Settings
 
-This document explains how to configure the required user settings for the Color Kit Grande Spotify Controller. These include your Wi-Fi credentials, Spotify developer information, and timezone configuration.
+In order for this project to function, it needs to be able to connect to a WiFi network and authenticate with Spotify. This document explains how to configure it to do these things. 
 
 These values must be set before the device can connect to your network or Spotify account.
 

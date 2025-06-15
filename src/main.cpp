@@ -316,7 +316,7 @@ void setupLogging()
     logger.setLogLevel(LOGTAG_HEAP, ESP_LOG_INFO);
     //logger.setLogLevel(LOGTAG_TRACE, ESP_LOG_INFO);
     logger.setLogLevel(LOGTAG_FILEIO, ESP_LOG_INFO);
-    logger.setLogLevel(LOGTAG_CACHE, ESP_LOG_INFO);
+    // logger.setLogLevel(LOGTAG_CACHE, ESP_LOG_INFO);
     logger.setLogLevel(LOGTAG_VAULT, ESP_LOG_INFO);    
 
     // Supress logs for ESP32 components
