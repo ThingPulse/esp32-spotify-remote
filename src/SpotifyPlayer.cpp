@@ -561,6 +561,19 @@ void SpotifyPlayer::refreshCurrentSong(CurrentlyPlaying currentlyPlaying)
     // const char* artist =
     spLogI(LOGTAG_MULTITASK, "Refreshing current song.  SpotifyPlayer::refreshCurrentSong(CurrentlyPlaying currentlyPlaying)");
 
+    // If not a track or episode, update the UI accordingly and indicate music isn't available
+    if ((!currentlyPlaying.currentlyPlayingType == SpotifyPlayingType::track)
+    &&  (!currentlyPlaying.currentlyPlayingType == SpotifyPlayingType::episode))
+    {
+        spLogI(LOGTAG_GENERAL, " _isMusicAvailable set to false. currentlyPlayingType is not a supported type." );
+        _isMusicAvailable = false; 
+        // force a refresh to get the waiting message
+        postScuiMessage(SCUIMessageType::UM_MARK_DIRTY,
+                        "",
+                        true);        
+        return;
+    }
+
     if (xSemaphoreTake(_xSemaphoreDataCopy, portMAX_DELAY)) 
     {
         // copy currentlyPlaying over for use
