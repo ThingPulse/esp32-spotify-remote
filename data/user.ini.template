@@ -26,6 +26,9 @@ client_secret = Enter your Spotify Client Secret here
 ; System Settings:
 ; Timezone format - see
 ;      https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
+; For US date and time formatting, include:
+; ui_date_time_format = US
 ; ----------------------------------------------------------------------
 [system]
 timezone = CST6CDT,M3.2.0,M11.1.0
+ui_date_time_format = US

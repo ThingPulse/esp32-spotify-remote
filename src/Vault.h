@@ -79,6 +79,7 @@ public:
     String            getSpotifyClientID();
     String            getSpotifyClientSecret();
     String            getTimezone();
+    bool              isUSDateTimeFormattingUsed();
 
 private:
     Vault();
@@ -87,7 +88,8 @@ private:
     String                  decrypt(const String& encryptedBase64, bool tiedToDevice);
     void                    printEncryptionHints();
     bool                    _useHardcodedValues   = true;
-    VaultPrivacyLevel       _privacyLevel          = VaultPrivacyLevel::None;
+    VaultPrivacyLevel       _privacyLevel         = VaultPrivacyLevel::None;
+    bool                    _dateTimeFormatUS     = false;
     std::array<char, VAULT_MAX_CRED_LENGTH>   _ssid{};
     std::array<char, VAULT_MAX_CRED_LENGTH>   _wifiPwd{};
     std::array<char, VAULT_MAX_CRED_LENGTH>   _clientId{};

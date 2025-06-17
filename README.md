@@ -46,6 +46,7 @@ In order to run this project on your device, you will need to setup an applicati
   - Home view with track metadata and album art
   - Cover Art only view
   - Clock view with time and playback progress
+  - Supports 12-hour and 24-hour time formats
   - Diagnostics view with system stats and Spotify state
 
 - **OAuth 2.0 Authorization Flow**
@@ -60,6 +61,7 @@ In order to run this project on your device, you will need to setup an applicati
   - Modular architecture allows easy addition of new Views (UI screens)
   - Built-in monitoring tools for measuring system performance and UI responsiveness
   - Structured and tag-based logging system for easier debugging and analysis
+  - Optional `user.ini` file for easy credential and time zone management
 
 
 <!--Design Context Diagram -->

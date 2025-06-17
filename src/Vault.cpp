@@ -203,6 +203,11 @@ void Vault::initialize()
             {
                 strncpy(_timezone.data(), value.c_str(), _timezone.size() - 1);
             }
+            else if (key == "ui_date_time_format")
+            {
+                value.toLowerCase();
+                _dateTimeFormatUS = (value == "us");
+            }
         }
         else if (section == "vault")
         {
@@ -714,3 +719,19 @@ std::array<uint8_t, 16> Vault::getAesKey(bool tiedToDevice)
     return finalKey;
 }
 
+/*
+** ===================================================================
+** isUSDateTimeFormattingUsed()
+**
+**    Determines whether US-style date/time formatting should be used.
+** ===================================================================
+*/
+bool Vault::isUSDateTimeFormattingUsed()
+{
+    if (_useHardcodedValues)
+    {
+        return Use_US_Date_Time_Format;
+    }
+
+    return _dateTimeFormatUS;
+}

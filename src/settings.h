@@ -41,6 +41,20 @@ static const char *SPOTIFY_CLIENT_SECRET = "SPOTIFY_CLIENT_SECRET goes here";
 // https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
 #define TIMEZONE "CET-1CEST,M3.5.0,M10.5.0/3"
 
+// format specifiers: https://cplusplus.com/reference/ctime/strftime/
+// values below are tested. updating the formatting may affect UI layout.
+
+  // Set to true to use US date/time formatting (12 hour times and US dates)
+  static const bool Use_US_Date_Time_Format = false;
+
+  // Formatting consistent with norms in the United States
+  #define UI_DATE_FORMAT_US "%A %B %d %Y"
+  #define UI_TIME_FORMAT_US "%l:%M %p"
+
+  // Formatting consistent with many countries outside the United States
+  #define UI_DATE_FORMAT "%A %d %B %Y"
+  #define UI_TIME_FORMAT "%H:%M"
+
 /*
 ** ===================================================================
 ** Version and Name Information

@@ -34,6 +34,7 @@ The template includes guidance on privacy levels and where to enter your credent
 | `[spotify]` | `client_id`    | Your Spotify Developer App Client ID                                     |
 |           | `client_secret`  | Your Spotify Developer App Client Secret                                 |
 | `[system]` | `timezone`      | POSIX timezone format string (see example or link below)                 |
+|             | `ui_date_time_format` | Optional: `US` for 12-hour clock and month-first date format; omit or use other values for international formatting |
 
 > 🔗 Refer to the [POSIX timezone list](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv) for formatting guidance.
 
@@ -113,6 +114,9 @@ client_secret = abcdefghijklmnopqrstuv1234567890
 ; System Settings:
 ; Timezone format - see
 ;      https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
+; For US date and time formatting, include:
+; ui_date_time_format = US
 ; ----------------------------------------------------------------------
 [system]
 timezone = CST6CDT,M3.2.0,M11.1.0
+ui_date_time_format = US

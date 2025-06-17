@@ -161,7 +161,7 @@ public:
                     TFTColor bg,
                     const char  *clearMask);
 
-    void drawClockTime(bool isForceRepaint);
+    void drawClockTime(bool isUSFormat, bool isForceRepaint);
 
     void showTouchDown(TFTColor color = TFTColor::SC_TouchDown);
     void showTouchUp(); 

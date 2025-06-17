@@ -1200,10 +1200,22 @@ void DisplayUI::rDrawString( const char  *str,
 **    Draws the current time using clock font and updates only when values change.
 ** ===================================================================
 */
-void DisplayUI::drawClockTime(bool isForceRepaint)
+void DisplayUI::drawClockTime(bool isUSFormat, bool isForceRepaint)
 {
+    const int fontSize  = 128;
+    const int fontWidth = 76;
 
-    std::string hours   = getCurrentTimestamp("%l").c_str();  
+    int offset          = 0;
+    std::string hours   = "";
+    if (isUSFormat)
+    {
+        hours  = getCurrentTimestamp("%l").c_str();  
+    }
+    else
+    {
+        hours  = getCurrentTimestamp("%H").c_str();
+        offset = 50;
+    }
     std::string minutes = getCurrentTimestamp("%M").c_str();  
     std::string ampm    = getCurrentTimestamp("%p").c_str();  
     std::string seconds = getCurrentTimestamp("%S").c_str();
@@ -1212,51 +1224,55 @@ void DisplayUI::drawClockTime(bool isForceRepaint)
     static std::string lastMinutes = "";
     static std::string lastAmpm    = "";
 
-    const int fontSize  = 128;
-    const int fontWidth = 76;
-
+    // Hours
     if ((lastHours != hours)
     ||  isForceRepaint)
     {
-        _tft->fillRect(20, 35, fontWidth * 2, 100, toValue(getBackground())); 
-        drawClockString(hours.c_str(), 20, 25, fontSize, TFTColor::White, getBackground());   
+        _tft->fillRect(20 + offset, 35, fontWidth * 2, 100, toValue(getBackground())); 
+        drawClockString(hours.c_str(), 20 + offset, 25, fontSize, TFTColor::White, getBackground());   
         lastHours = hours;     
     }
 
+    // Seconds indicator :
     static bool isLastColonVisible      = true;
     int         iSeconds              = std::stoi(seconds);
     bool        isCurrentColonVisible = (iSeconds % 2 == 0);
     if (isCurrentColonVisible != isLastColonVisible 
     ||  isForceRepaint)
     {
-        _tft->fillRect(180, 53, 35, 84, toValue(getBackground())); 
+        _tft->fillRect(180 + offset, 53, 35, 84, toValue(getBackground())); 
         const char* colonChar = isCurrentColonVisible ? ":" : " ";
-        drawClockString(colonChar, 160, 20, fontSize, TFTColor::Yellow, getBackground());
+        drawClockString(colonChar, 160 + offset, 20, fontSize, TFTColor::Yellow, getBackground());
         isLastColonVisible = isCurrentColonVisible;
     }
 
+    // Minutes
     if ((lastMinutes != minutes)
     ||  isForceRepaint)
     {  
-        _tft->fillRect(225, 35, fontWidth * 2, 100, toValue(getBackground())); 
-        drawClockString(minutes.c_str(), 220, 25, fontSize, TFTColor::White, getBackground());
+        _tft->fillRect(225 + offset, 35, fontWidth * 2, 100, toValue(getBackground())); 
+        drawClockString(minutes.c_str(), 220 + offset, 25, fontSize, TFTColor::White, getBackground());
         lastMinutes = minutes;     
     }
 
-    if ((lastAmpm != ampm)
-    ||  isForceRepaint)
-    { 
-        _tft->fillRect(380, 40, fontWidth, 100, toValue(getBackground())); //toValue(getBackground())); 
-        if (ampm == "AM")
-        {
-            drawClockString(ampm.c_str(), 380, 35, fontSize / 2, TFTColor::Yellow, getBackground());
-        }  
-        else
-        {
-            drawClockString(ampm.c_str(), 380, 80, fontSize / 2, TFTColor::Yellow, getBackground());           
-        } 
+    // AM/PM if US Format
+    if (isUSFormat)
+    {
+        if ((lastAmpm != ampm)
+        ||  isForceRepaint)
+        { 
+            _tft->fillRect(380, 40, fontWidth, 100, toValue(getBackground())); //toValue(getBackground())); 
+            if (ampm == "AM")
+            {
+                drawClockString(ampm.c_str(), 380, 35, fontSize / 2, TFTColor::Yellow, getBackground());
+            }  
+            else
+            {
+                drawClockString(ampm.c_str(), 380, 80, fontSize / 2, TFTColor::Yellow, getBackground());           
+            } 
 
-        lastAmpm = ampm;     
+            lastAmpm = ampm;     
+        }
     }
 }
 

@@ -24,6 +24,7 @@
 #include "Renderers/PreviousTrackButtonRenderer.h"
 #include "Renderers/PlayPauseButtonRenderer.h"
 #include "Renderers/NextTrackButtonRenderer.h"
+#include "Vault.h"
 
 /*
 ** ===================================================================
@@ -341,19 +342,26 @@ void HomeView::handlePlayStatus()
 **                    changed.
 **
 ** Notes:
-**    - The time is displayed in the format "XX:XX PM".
+**    - The time is displayed in the format "XX:XX PM" if US formatting is used.
 **    - If the current time differs from the last displayed time or 
 **      if a forced repaint is requested, the time is redrawn.
 ** ===================================================================
 */
 void HomeView::handleClock(bool isPaintForced)
 {
-    std::string        timeStr  = getCurrentTimestamp("%l:%M %p").c_str();         
+    std::string       format = UI_TIME_FORMAT;
+    int               offset = 10;
+    if (Vault::getInstance().isUSDateTimeFormattingUsed())
+    {
+        format = UI_TIME_FORMAT_US;
+        offset = 0;
+    }
+    std::string        timeStr  = getCurrentTimestamp(format.c_str()).c_str();         
     static std::string lastTime = "X:XX/X:XX";
     if ((lastTime != timeStr)
     ||  (isPaintForced))
     {            
-        _pUI->lDrawString(timeStr.c_str(), 310, 287, 20, TFTColor::DarkGreen, TFTColor::Black,"XX:XX PM");    
+        _pUI->lDrawString(timeStr.c_str(), 310 + offset, 287, 20, TFTColor::DarkGreen, TFTColor::Black,"XX:XX PM");    
         lastTime = timeStr;
     }    
 }

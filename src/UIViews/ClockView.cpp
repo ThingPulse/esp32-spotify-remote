@@ -22,6 +22,7 @@
 #include "ThingPulse/util.h"  
 #include "SpotifyArtMgr.h"
 #include "Renderers/BackButtonRenderer.h"
+#include "Vault.h"
 
 /*
 ** ===================================================================
@@ -87,7 +88,7 @@ void ClockView::drawUI()
     if (millis() > _requestDueTime)
     {
         handleDate(false);
-        _pUI->drawClockTime(false);
+        _pUI->drawClockTime(Vault::getInstance().isUSDateTimeFormattingUsed(),false);
         char s[50];
         snprintf(s, sizeof(s), "%s", getCurrentTimestamp("%Y-%m-%d %H:%M:%S").c_str());        
     }
@@ -290,7 +291,12 @@ void ClockView::handlePlayStatus(bool isForcedUpdate)
 */
 void ClockView::handleDate(bool isForceRefresh)
 {
-    std::string        dateStr  = getCurrentTimestamp("%A %B %d %Y").c_str();
+    std::string          format = UI_DATE_FORMAT;
+    if (Vault::getInstance().isUSDateTimeFormattingUsed())
+    {
+        format = UI_DATE_FORMAT_US;
+    }
+    std::string        dateStr  = getCurrentTimestamp(format.c_str()).c_str();
     static std::string lastDate = "";
 
     if ((lastDate != dateStr)
@@ -386,7 +392,7 @@ void ClockView::enteringView()
     // Make sure the UI is painted fresh
     _pUI->setBackground(TFTColor::DarkestGreen, false);
     _pUI->clearScreenHome();  
-    _pUI->drawClockTime(true);
+    _pUI->drawClockTime(Vault::getInstance().isUSDateTimeFormattingUsed(), true);
     _pUI->markUIDirty(true); // force refresh to get album details
 
 }
