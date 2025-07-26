@@ -1,2 +1,4 @@
 .pio
 .vscode
+src/compile_time.h
+data/user.ini

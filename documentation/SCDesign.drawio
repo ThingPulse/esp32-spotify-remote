@@ -1,0 +1,311 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15" version="27.0.3">
+  <diagram name="Page-1" id="3Ql3qOf2bo2eGhESWVKz">
+    <mxGraphModel dx="1810" dy="1298" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="mG-6huppTFD_hq-MHLt3-95" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="150" width="1010" height="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-83" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;fillColor=none;strokeColor=light-dark(#000000,#009999);" vertex="1" parent="1">
+          <mxGeometry x="50" y="195" width="970" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-81" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;fillColor=none;strokeColor=light-dark(#000000,#009999);" vertex="1" parent="1">
+          <mxGeometry x="50" y="700" width="970" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-38" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="210" width="450" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-37" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="210" width="450" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="ppspXEouMZSPUXMxpRM1-1" value="main.cpp" style="html=1;whiteSpace=wrap;fillColor=#60a917;fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#2D7600;shape=note;backgroundOutline=1;darkOpacity=0.05;" parent="1" vertex="1">
+          <mxGeometry x="190" y="510" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-2" value="SCLogger" style="html=1;whiteSpace=wrap;fillColor=#1ba1e2;fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="730" y="720" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-3" value="util.cpp" style="html=1;whiteSpace=wrap;fillColor=#1ba1e2;fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#006EAF;shape=note;backgroundOutline=1;darkOpacity=0.05;" vertex="1" parent="1">
+          <mxGeometry x="350" y="720" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-5" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-50" target="mG-6huppTFD_hq-MHLt3-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="495" y="640" as="sourcePoint" />
+            <mxPoint x="545" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-76" value="Fetch Time" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-5">
+          <mxGeometry x="-0.023" y="1" relative="1" as="geometry">
+            <mxPoint x="1" y="-88" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-8" value="Monitor" style="html=1;whiteSpace=wrap;fillColor=#1ba1e2;fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="220" y="720" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-10" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ppspXEouMZSPUXMxpRM1-1" target="mG-6huppTFD_hq-MHLt3-43">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="640" as="sourcePoint" />
+            <mxPoint x="480" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-63" value="Receives&lt;div&gt;Messages&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-10">
+          <mxGeometry x="-0.1762" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-11" value="UIView&amp;nbsp;&lt;div&gt;derived instances&lt;/div&gt;" style="html=1;whiteSpace=wrap;fillColor=light-dark(#60A917,#2B4F07);fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#2D7600;" vertex="1" parent="1">
+          <mxGeometry x="280" y="350" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-12" value="UIElement" style="html=1;whiteSpace=wrap;fillColor=light-dark(#60A917,#2B4F07);fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#2D7600;" vertex="1" parent="1">
+          <mxGeometry x="200" y="240" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-13" value="IUIRenderer" style="html=1;whiteSpace=wrap;fillColor=light-dark(#60A917,#2B4F07);fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#2D7600;" vertex="1" parent="1">
+          <mxGeometry x="350" y="240" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-14" value="UIViewManager" style="html=1;whiteSpace=wrap;fillColor=light-dark(#60A917,#2B4F07);fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#2D7600;" vertex="1" parent="1">
+          <mxGeometry x="80" y="350" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-15" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="ppspXEouMZSPUXMxpRM1-1" target="mG-6huppTFD_hq-MHLt3-14">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="640" as="sourcePoint" />
+            <mxPoint x="620" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-16" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="ppspXEouMZSPUXMxpRM1-1" target="mG-6huppTFD_hq-MHLt3-11">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="640" as="sourcePoint" />
+            <mxPoint x="620" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-17" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-11" target="mG-6huppTFD_hq-MHLt3-12">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="233" y="530" as="sourcePoint" />
+            <mxPoint x="345" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-47" value="Consists of" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-17">
+          <mxGeometry x="-0.2064" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-18" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-11" target="mG-6huppTFD_hq-MHLt3-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="318" y="360" as="sourcePoint" />
+            <mxPoint x="265" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-48" value="Has a" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-18">
+          <mxGeometry x="-0.2474" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-19" value="SpotifyPlayer" style="html=1;whiteSpace=wrap;fillColor=light-dark(#60A917,#CC00CC);fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#2D7600;" vertex="1" parent="1">
+          <mxGeometry x="670" y="510" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-90" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-20" target="mG-6huppTFD_hq-MHLt3-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-20" value="spotify.h" style="html=1;whiteSpace=wrap;fillColor=#1ba1e2;fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#006EAF;shape=note;backgroundOutline=1;darkOpacity=0.05;" vertex="1" parent="1">
+          <mxGeometry x="480" y="720" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-23" value="SpotifyArtMgr" style="html=1;whiteSpace=wrap;fillColor=light-dark(#60A917,#CC00CC);fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#2D7600;" vertex="1" parent="1">
+          <mxGeometry x="860" y="510" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-24" value="SCFileIO" style="html=1;whiteSpace=wrap;fillColor=#1ba1e2;fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="860" y="720" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-27" value="DisplayUI" style="html=1;whiteSpace=wrap;fillColor=#1ba1e2;fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="90" y="720" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-28" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-24" target="mG-6huppTFD_hq-MHLt3-23">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="635" y="870" as="sourcePoint" />
+            <mxPoint x="635" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-67" value="Writes/Reads" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-28">
+          <mxGeometry x="0.0065" y="-2" relative="1" as="geometry">
+            <mxPoint x="-2" y="16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-29" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-19" target="mG-6huppTFD_hq-MHLt3-23">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="173" y="520" as="sourcePoint" />
+            <mxPoint x="285" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-59" value="Fetches&lt;div&gt;Covers&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-29">
+          <mxGeometry x="-0.0443" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-31" value="PlayingMetadata" style="html=1;whiteSpace=wrap;fillColor=light-dark(#60A917,#CC00CC);fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#2D7600;" vertex="1" parent="1">
+          <mxGeometry x="670" y="350" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-32" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-19" target="mG-6huppTFD_hq-MHLt3-31">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="545" as="sourcePoint" />
+            <mxPoint x="690" y="545" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-58" value="Writes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-32">
+          <mxGeometry x="0.0388" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-33" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-11" target="mG-6huppTFD_hq-MHLt3-31">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="605" y="530" as="sourcePoint" />
+            <mxPoint x="605" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-49" value="Retrieves" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-33">
+          <mxGeometry x="-0.2019" relative="1" as="geometry">
+            <mxPoint x="-37" y="-7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-39" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-43">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="670" y="535" as="sourcePoint" />
+            <mxPoint x="590" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-41" value="&lt;i&gt;UIHandler task - pinned to Core 0&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="185" y="210" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-44" value="SpotifyArduino" style="html=1;whiteSpace=wrap;fillColor=#1ba1e2;fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="607.5" y="720" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-45" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-14" target="mG-6huppTFD_hq-MHLt3-11">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="250" y="354.74" as="sourcePoint" />
+            <mxPoint x="120" y="300.0031578947369" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-46" value="Creates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-45">
+          <mxGeometry x="0.2107" relative="1" as="geometry">
+            <mxPoint x="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-52" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-4" target="mG-6huppTFD_hq-MHLt3-50">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="405" y="1100" as="sourcePoint" />
+            <mxPoint x="405" y="930" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-50" value="Internet" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="365" y="1015" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-55" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-19" target="mG-6huppTFD_hq-MHLt3-44">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="720" y="660" as="sourcePoint" />
+            <mxPoint x="735" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-56" value="Uses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-55">
+          <mxGeometry x="-0.052" y="1" relative="1" as="geometry">
+            <mxPoint x="-6" y="19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-60" value="Persistent Cache" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#7AA116;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.file_system;" vertex="1" parent="1">
+          <mxGeometry x="888.29" y="1020" width="53.42" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-61" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-24" target="mG-6huppTFD_hq-MHLt3-60">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="915" y="730" as="sourcePoint" />
+            <mxPoint x="915" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-62" value="Writes/ Reads" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-61">
+          <mxGeometry x="-0.0536" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" y="-84" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-65" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-19" target="mG-6huppTFD_hq-MHLt3-43">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="670" y="535" as="sourcePoint" />
+            <mxPoint x="590" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-66" value="Sends&lt;div&gt;Messages&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-65">
+          <mxGeometry x="-0.0219" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-43" value="SCUI Queue" style="rounded=0;whiteSpace=wrap;html=1;fillColor=light-dark(#FFFFFF,#666600);" vertex="1" parent="1">
+          <mxGeometry x="470" y="515" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-69" value="" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-44" target="mG-6huppTFD_hq-MHLt3-53">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="660" y="770" as="sourcePoint" />
+            <mxPoint x="660" y="940" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-70" value="Gets Song Information&lt;div&gt;Requests Actions&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-69">
+          <mxGeometry x="-0.5426" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" y="-17" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-53" value="Internet" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="1015" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-71" value="&lt;i&gt;SongRefresh task - pinned to Core 1&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="670" y="210" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-74" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="350" y="1090" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-4" value="pool.ntp.org" style="html=1;whiteSpace=wrap;fillColor=light-dark(#1BA1E2,#0000FF);fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#006EAF;" vertex="1" parent="mG-6huppTFD_hq-MHLt3-74">
+          <mxGeometry y="10" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-72" value="" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.globe;" vertex="1" parent="mG-6huppTFD_hq-MHLt3-74">
+          <mxGeometry x="100" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-75" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="600" y="1090" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-21" value="spotify" style="html=1;whiteSpace=wrap;fillColor=light-dark(#1BA1E2,#0000FF);fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#006EAF;" vertex="1" parent="mG-6huppTFD_hq-MHLt3-75">
+          <mxGeometry y="9.999999999999998" width="112.65306122448978" height="49.99999999999998" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-73" value="" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.globe;" vertex="1" parent="mG-6huppTFD_hq-MHLt3-75">
+          <mxGeometry x="100.40816326530609" width="19.591836734693867" height="19.999999999999996" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-98" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="mG-6huppTFD_hq-MHLt3-75">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="59.75" y="10" as="sourcePoint" />
+            <mxPoint x="59.75" y="-15" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-84" value="Application Flow" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-85" value="Utilities / Services" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="45" y="790" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-87" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=light-dark(#000000,#009999);" edge="1" parent="1" source="mG-6huppTFD_hq-MHLt3-83" target="mG-6huppTFD_hq-MHLt3-81">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="680" as="sourcePoint" />
+            <mxPoint x="540" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-89" value="Uses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mG-6huppTFD_hq-MHLt3-87">
+          <mxGeometry x="0.0632" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-25" value="Arduino-ESP32 Core" style="rounded=0;whiteSpace=wrap;html=1;fillColor=light-dark(#FFFFFF,#666600);" vertex="1" parent="1">
+          <mxGeometry x="50" y="840" width="970" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-26" value="ESP-IDF (FreeRTOS, System Services, Wi-Fi/Bluetooth Stack, etc.)&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=light-dark(#FFFFFF,#666600);" vertex="1" parent="1">
+          <mxGeometry x="50" y="920" width="970" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-92" value="ESP32 Spotify Remote Design - Ver 2.0.0" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="55" y="158" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mG-6huppTFD_hq-MHLt3-94" value="Last updated 2025-05-24 by Electric Diversions" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="745" y="1120" width="280" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

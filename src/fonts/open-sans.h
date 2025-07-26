@@ -1,5 +1,15 @@
-// SPDX-FileCopyrightText: 2023 ThingPulse Ltd., https://thingpulse.com
-// SPDX-License-Identifier: MIT
+/*-------------------------------------------------------------------------------------------------
+**
+** open-sans.h
+**
+**    Contains the binary font data for the Open Sans typeface used in the Spotify display UI.
+**    This header defines the glyph data for rendering fixed-width bold text on screen.
+**
+** SPDX-FileCopyrightText: 2025 ThingPulse Ltd., https://thingpulse.com  
+** SPDX-License-Identifier: MIT
+**
+** ------------------------------------------------------------------------------------------------
+*/
 
 // This was created as per https://github.com/takkaO/OpenFontRender/blob/master/examples/TFT_eSPI/load_from_binary/load_from_binary.ino#L1
 // The generated font supports the following characters; basic ASCII, accented chars from extended ASCII plus €:

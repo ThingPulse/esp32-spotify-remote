@@ -1,0 +1,34 @@
+;
+; User settings for Spotify Controller.  Make sure to Upload Filesystem
+; Image after updating.
+;
+; ----------------------------------------------------------------------
+; Privacy Levels:
+;    0 - None (credentials in clear text)
+;    1 - Good (encrypted, reusable across devices)
+;    2 - Better (encrypted, tied to this device)
+; ----------------------------------------------------------------------
+[vault]
+privacy_level = 0
+; ----------------------------------------------------------------------
+; WiFi:
+; ----------------------------------------------------------------------
+[wifi]
+ssid = Your WiFi Name Here
+password = Your WiFi Password Here
+; ----------------------------------------------------------------------
+; Spotify:
+; ----------------------------------------------------------------------
+[spotify]
+client_id = Enter your Spotify Client ID here
+client_secret = Enter your Spotify Client Secret here
+; ----------------------------------------------------------------------
+; System Settings:
+; Timezone format - see
+;      https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
+; For US date and time formatting, include:
+; ui_date_time_format = US
+; ----------------------------------------------------------------------
+[system]
+timezone = CST6CDT,M3.2.0,M11.1.0
+ui_date_time_format = US
