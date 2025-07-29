@@ -34,7 +34,7 @@ In order to run this project on your device, you will need to setup an applicati
  ## Features
 
 - **Spotify Playback Control**
-  - Play, pause, skip to next/previous track from the touch screen
+  - Play, pause, skip to next/previous track from the touch screen. ⚠️ Spotify requires a premium account for this!
   - Control playback on any active Spotify Connect device linked to your account (e.g., phone, browser, smart speaker)
 
 - **Album Art Display**
@@ -75,7 +75,7 @@ In order to run this project on your device, you will need to setup an applicati
 - Tap the **album art** on the Home view to switch to the **Cover Art view**.
 - Tap the **clock** to switch to the **Clock view**.
 - Tap the **network status box** in the lower-right corner to open the **Diagnostics view**.
-- Tap the top-left corner for **Prev**, the top-center for **Pause/Play**, and the top-right for **Next** when using views other than Home. 
+- Tap the top-left corner for **Prev**, the top-center for **Pause/Play**, and the top-right for **Next** when using views other than Home.
 
 > For detailed display logic and diagnostics layout, see `DiagnosticsView.cpp`.
 
